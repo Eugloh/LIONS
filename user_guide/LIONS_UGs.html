@@ -1,0 +1,474 @@
+<!DOCTYPE html><html>
+<head>
+<title></title>
+<style type="text/css">
+<!--
+.xflip {
+    -moz-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: fliph;
+}
+.yflip {
+    -moz-transform: scaleY(-1);
+    -webkit-transform: scaleY(-1);
+    -o-transform: scaleY(-1);
+    transform: scaleY(-1);
+    filter: flipv;
+}
+.xyflip {
+    -moz-transform: scaleX(-1) scaleY(-1);
+    -webkit-transform: scaleX(-1) scaleY(-1);
+    -o-transform: scaleX(-1) scaleY(-1);
+    transform: scaleX(-1) scaleY(-1);
+    filter: fliph + flipv;
+}
+-->
+</style>
+</head>
+<body>
+<a name=1></a>LIONS&#160;Manual<br/>
+v.0.2<br/>
+Artem&#160;Babaian,&#160;Richard&#160;Thompson<br/>
+2018-12-02<br/>
+Contents<br/>
+<a href="LIONS_UGs.html#2">1.&#160;LIONS&#160;Pipeline&#160;Architecture</a><br/>
+2<br/>
+<a href="LIONS_UGs.html#2">2.&#160;LIONS&#160;Installation</a><br/>
+2<br/>
+<a href="LIONS_UGs.html#2">2.1.&#160;LIONS&#160;Container&#160;(Docker)</a><br/>
+.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.<br/>
+2<br/>
+<a href="LIONS_UGs.html#3">2.2.&#160;LIONS&#160;Command&#160;Line&#160;</a>.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.<br/>
+3<br/>
+<a href="LIONS_UGs.html#3">2.3.&#160;Initializing&#160;LIONS&#160;Resources&#160;</a>.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.<br/>
+3<br/>
+<a href="LIONS_UGs.html#5">3.&#160;Running&#160;LIONS</a><br/>
+5<br/>
+<a href="LIONS_UGs.html#5">3.1.&#160;Running&#160;LIONS&#160;using&#160;a&#160;parameter&#160;file&#160;</a>.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.<br/>
+5<br/>
+<a href="LIONS_UGs.html#6">3.2.&#160;Running&#160;LIONS&#160;using&#160;commandline&#160;options&#160;</a>.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.<br/>
+6<br/>
+<a href="LIONS_UGs.html#8">4.&#160;LIONS&#160;File&#160;Architecture</a><br/>
+8<br/>
+<a href="LIONS_UGs.html#8">4.1.&#160;./&#160;</a>.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.<br/>
+8<br/>
+<a href="LIONS_UGs.html#8">4.2.&#160;./controls&#160;</a>.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.<br/>
+8<br/>
+<a href="LIONS_UGs.html#8">4.3.&#160;./bin&#160;</a>.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.<br/>
+8<br/>
+<a href="LIONS_UGs.html#8">4.4.&#160;./projects&#160;</a>.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.<br/>
+8<br/>
+<a href="LIONS_UGs.html#9">4.5.&#160;./scripts&#160;</a>.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.<br/>
+9<br/>
+<a href="LIONS_UGs.html#10">4.6.&#160;./resources&#160;</a>.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.<br/>
+10<br/>
+<a href="LIONS_UGs.html#10">4.7.&#160;./software&#160;</a>.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.<br/>
+10<br/>
+<a href="LIONS_UGs.html#11">5.&#160;LIONS&#160;Error&#160;Codes</a><br/>
+11<br/>
+<a href="LIONS_UGs.html#11">5.1.&#160;Initialization&#160;Codes&#160;</a>.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.<br/>
+11<br/>
+<a href="LIONS_UGs.html#11">5.2.&#160;eastLion&#160;Error&#160;Codes&#160;</a>.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.<br/>
+11<br/>
+<a href="LIONS_UGs.html#11">5.3.&#160;westLion&#160;Error&#160;Codes</a><br/>
+.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.<br/>
+11<br/>
+<a href="LIONS_UGs.html#12">6.&#160;LIONS&#160;output&#160;definitions</a><br/>
+12<br/>
+<a href="LIONS_UGs.html#12">6.1.&#160;Output&#160;File&#160;Types&#160;</a>.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.<br/>
+12<br/>
+<a href="LIONS_UGs.html#12">6.2.&#160;Output&#160;Columns&#160;</a>.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.<br/>
+12<br/>
+<a href="LIONS_UGs.html#12">6.2.1.&#160;‘&lt;project&gt;.lions’&#160;</a>.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.<br/>
+12<br/>
+<a href="LIONS_UGs.html#14">6.2.2.&#160;‘&lt;project&gt;.rslions’&#160;</a>.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.<br/>
+14<br/>
+1<br/>
+<hr/>
+<a name=2></a><a href="LIONS_UGs.html#15">A.&#160;Appendices</a><br/>
+15<br/>
+<a href="LIONS_UGs.html#15">A.1.&#160;Running&#160;Docker&#160;on&#160;the&#160;command&#160;line&#160;</a>.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.&#160;.<br/>
+15<br/>
+1.&#160;LIONS&#160;Pipeline&#160;Architecture<br/>
+LIONS&#160;is&#160;a&#160;bioinformatic&#160;analysis&#160;pipeline&#160;which&#160;brings&#160;together&#160;a&#160;few&#160;pieces&#160;of&#160;soft-<br/>ware&#160;and&#160;some&#160;home-brewed&#160;scripts&#160;to&#160;annotate&#160;a&#160;paired-end&#160;RNAseq&#160;library&#160;against&#160;a<br/>reference&#160;TE&#160;annotation&#160;set&#160;(such&#160;as&#160;Repeat&#160;Masker).<br/>
+East&#160;Lion&#160;processes&#160;a&#160;bam&#160;file&#160;input,&#160;re-aligns&#160;it&#160;to&#160;a&#160;genome,&#160;builds&#160;an&#160;ab&#160;initio<br/>
+assembly&#160;using&#160;Tophat2.&#160;This&#160;assembly&#160;is&#160;then&#160;proccessed&#160;and&#160;local&#160;read&#160;searches&#160;are<br/>done&#160;at&#160;the&#160;5’&#160;ends&#160;to&#160;find&#160;additional&#160;transcript&#160;start&#160;sites&#160;and&#160;quality&#160;control&#160;the&#160;5’<br/>ends&#160;of&#160;the&#160;assembly.&#160;The&#160;output&#160;is&#160;a&#160;file-type&#160;&lt;library&gt;&#160;.lions&#160;which&#160;annotates&#160;the<br/>intersection&#160;between&#160;the&#160;assembly,&#160;a&#160;reference&#160;gene&#160;set&#160;and&#160;repeat&#160;set.<br/>
+West&#160;Lion&#160;compiles&#160;different&#160;.lions&#160;files,&#160;groups&#160;them&#160;into&#160;biological&#160;catagories&#160;(i.e.<br/>
+Cancer&#160;vs.&#160;Normal&#160;or&#160;Treatment&#160;vs.&#160;Control)&#160;and&#160;compares&#160;and&#160;analyzes&#160;the&#160;data&#160;to<br/>create&#160;graphs&#160;and&#160;meaningful&#160;interpretation&#160;of&#160;the&#160;data.<br/>
+2.&#160;LIONS&#160;Installation<br/>
+Download/clone&#160;the&#160;LIONS&#160;repo:&#160;https://github.com/ababaian/LIONS/archive/master.zip<br/>
+2.1.&#160;LIONS&#160;Container&#160;(Docker)<br/>
+LIONS&#160;can&#160;be&#160;installed&#160;as&#160;a&#160;Docker&#160;container.&#160;Navigate&#160;to&#160;the&#160;$LIONS&#160;folder&#160;which<br/>contains&#160;the&#160;‘Dockerfile‘.&#160;Build&#160;container&#160;with:<br/>
+cd&#160;\$LIONS/<br/>docker&#160;build&#160;-t&#160;lions&#160;.<br/>
+Users&#160;will&#160;still&#160;need&#160;to&#160;download&#160;the&#160;LIONS&#160;resource&#160;files&#160;(See&#160;below);&#160;although&#160;users<br/>
+wishing&#160;to&#160;use&#160;hg19&#160;or&#160;hg38&#160;can&#160;use&#160;the&#160;source_refs.sh&#160;to&#160;automate&#160;this&#160;process.<br/>
+In&#160;order&#160;to&#160;assist&#160;users,&#160;LIONS&#160;provides&#160;a&#160;reference-read&#160;’Fastq&#160;to&#160;Output’&#160;Dockerfile,<br/>
+the&#160;resulting&#160;container&#160;should&#160;not&#160;be&#160;used&#160;for&#160;anaylsis&#160;due&#160;it’s&#160;size&#160;but&#160;will&#160;allow&#160;users<br/>to&#160;understand&#160;LIONS&#160;usage&#160;and&#160;the&#160;resource&#160;directory&#160;layout.&#160;The&#160;example&#160;container<br/>can&#160;be&#160;built&#160;from&#160;the&#160;$LIONS&#160;directory&#160;using:<br/>
+docker&#160;build&#160;-t&#160;lions-ref&#160;Ref-Ready/.<br/>
+Please&#160;note,&#160;the&#160;example&#160;container&#160;does&#160;require&#160;the&#160;LIONS&#160;container&#160;to&#160;have&#160;already<br/>been&#160;built&#160;and&#160;named&#160;as&#160;described&#160;above.<br/>
+2<br/>
+<hr/>
+<a name=3></a>2.2.&#160;LIONS&#160;Command&#160;Line<br/>
+Users&#160;with&#160;experience&#160;of&#160;the&#160;linux&#160;commandline&#160;may&#160;wish&#160;to&#160;download&#160;the&#160;package&#160;from<br/>github&#160;and&#160;run&#160;it&#160;directly&#160;without&#160;using&#160;Docker.&#160;This&#160;is&#160;especially&#160;useful&#160;for&#160;cluster-<br/>computing.In&#160;this&#160;case&#160;ensure&#160;the&#160;following&#160;software&#160;is&#160;installed&#160;on&#160;your&#160;system:<br/>
+•&#160;Python3&#160;and&#160;pysam<br/>
+•&#160;Bowtie2<br/>
+•&#160;Tophat2<br/>
+•&#160;Java&#160;v8&#160;or&#160;higher<br/>
+•&#160;Samtools&#160;v0.1.18<br/>
+•&#160;R&#160;v3.5.0&#160;or&#160;higher<br/>
+•&#160;Bedtools&#160;v2.25.0<br/>
+•&#160;Cufflinks&#160;v2.2.1<br/>
+2.3.&#160;Initializing&#160;LIONS&#160;Resources<br/>
+1.&#160;If&#160;you&#160;don’t&#160;have&#160;LIONS&#160;downloaded&#160;already;&#160;clone&#160;it<br/>
+git&#160;clone&#160;git@github.com:ababaian/LIONS.git<br/>
+2.&#160;Initialize&#160;genomic&#160;resources&#160;for&#160;LIONS&#160;in./LIONS/resources&#160;copy&#160;’example’&#160;folder<br/>
+to&#160;’&lt;genomeName&gt;’&#160;folder<br/>
+3.&#160;Populate&#160;the&#160;resource&#160;files:<br/>
+a)&#160;In&#160;./LIONS/resources/&lt;genomeName&gt;/genome/&#160;add&#160;a&#160;&lt;genomeName&gt;.fa<br/>
+genome&#160;sequence&#160;file<br/>
+b)&#160;In&#160;./LIONS/resources/&lt;genomeName&gt;/annotation/&#160;add&#160;the&#160;ucsc&#160;annotation<br/>
+file<br/>
+c)&#160;In&#160;./LIONS/resources/&lt;genomeName&gt;/repeat/&#160;add&#160;the&#160;ucsc&#160;repeatMasker<br/>
+file<br/>
+#&#160;genomeName&#160;=&#160;hg38&#160;========================<br/>#&#160;Genome<br/>http://hgdownload.soe.ucsc.edu/goldenPath/hg38/bigZips/hg38.fa.gz<br/>
+#&#160;Gene&#160;Annotation&#160;(RefSeq)<br/>https://s3-us-west-2.amazonaws.com/lionproject/resources\<br/>/hg38/refseq_hg38.ucsc.gz<br/>
+#&#160;Repeat&#160;Masker<br/>
+3<br/>
+<hr/>
+<a name=4></a>https://s3-us-west-2.amazonaws.com/lionproject/resources\<br/>/hg38/rm_hg38.ucsc.gz<br/>
+#&#160;genomeName&#160;=&#160;hg19&#160;========================<br/>#&#160;Genome<br/>http://hgdownload.soe.ucsc.edu/goldenPath/hg19/bigZips/hg19.2bit<br/>
+#&#160;Gene&#160;Annotation&#160;(RefSeq)<br/>https://s3-us-west-2.amazonaws.com/lionproject/resources\<br/>/hg19/refSeq_hg19.ucsc.zip<br/>
+#&#160;Repeat&#160;Masker<br/>https://s3-us-west-2.amazonaws.com/lionproject/resources\<br/>/hg19/rm_hg19.ucsc.zip<br/>
+(The&#160;UCSC&#160;files&#160;are&#160;downloaded&#160;from&#160;the&#160;UCSC&#160;Table&#160;Browser&#160;as&#160;the&#160;‘all<br/>fields&#160;from&#160;selected&#160;table‘&#160;output&#160;format)<br/>
+4.&#160;Initialize&#160;the&#160;project&#160;parameters&#160;in&#160;parameter.ctrl:<br/>
+a)&#160;Give&#160;your&#160;project&#160;a&#160;name&#160;and&#160;fill&#160;out&#160;all&#160;the&#160;parameters&#160;software&#160;designated<br/>
+in&#160;the&#160;software&#160;list.<br/>
+5.&#160;This&#160;file&#160;contains&#160;all&#160;the&#160;system-specific&#160;parameters&#160;for&#160;LIONS&#160;to&#160;run&#160;on&#160;your<br/>
+computer.&#160;Go&#160;through&#160;this&#160;file&#160;and&#160;ensure&#160;the&#160;parameters&#160;make&#160;sense&#160;and&#160;the<br/>software&#160;pointers&#160;are&#160;compatible.<br/>
+a)&#160;Give&#160;your&#160;project&#160;a&#160;name&#160;and&#160;fill&#160;out&#160;all&#160;the&#160;parameters&#160;as&#160;you&#160;see&#160;fit.<br/>
+b)&#160;In&#160;the&#160;software&#160;list,&#160;refer&#160;LIONS&#160;to&#160;the&#160;paths&#160;for&#160;each&#160;software&#160;on&#160;your&#160;system.<br/>
+If&#160;it’s&#160;in&#160;$BIN&#160;already&#160;then&#160;you&#160;can&#160;simply&#160;type&#160;the&#160;command;&#160;LIONS&#160;will<br/>create&#160;links&#160;in&#160;it’s&#160;own&#160;folder&#160;structure&#160;to&#160;the&#160;software&#160;designated&#160;in&#160;the<br/>software&#160;list.<br/>
+4<br/>
+<hr/>
+<a name=5></a>3.&#160;Running&#160;LIONS<br/>
+Once&#160;the&#160;container&#160;has&#160;been&#160;built,&#160;lions&#160;can&#160;be&#160;run&#160;inside&#160;an&#160;interactive&#160;docker&#160;container<br/>which&#160;can&#160;be&#160;started&#160;using&#160;the&#160;following&#160;command:<br/>
+docker&#160;run&#160;-ti&#160;lions<br/>
+It’s&#160;a&#160;good&#160;idea&#160;to&#160;create&#160;a&#160;local&#160;LIONS&#160;directory&#160;($LIONS)&#160;outside&#160;of&#160;the&#160;container<br/>
+with&#160;all&#160;the&#160;resources&#160;and&#160;parameter&#160;files&#160;set-up.&#160;You&#160;can&#160;then&#160;mount&#160;the&#160;$LIONS<br/>directory&#160;into&#160;the&#160;container&#160;using&#160;-v.<br/>
+This&#160;command&#160;will&#160;open&#160;a&#160;(bash)&#160;terminal&#160;to&#160;the&#160;container,&#160;in&#160;the&#160;LIONS&#160;base&#160;direc-<br/>
+tory.<br/>
+cd&#160;\$LIONS<br/>docker&#160;run&#160;-v&#160;\$LIONS:/LIONS&#160;-ti&#160;lions<br/>
+where&#160;‘$LIONS‘&#160;is&#160;the&#160;directory&#160;on&#160;the&#160;host&#160;machine&#160;containg&#160;the&#160;data&#160;for&#160;analysis<br/>
+and&#160;‘/LIONS‘&#160;is&#160;the&#160;directory&#160;inside&#160;the&#160;container&#160;where&#160;the&#160;data&#160;will&#160;be&#160;accessed.<br/>
+e.g.&#160;Docker&#160;run&#160;-v&#160;/home/artem/LIONS-master:/LIONS&#160;-ti&#160;lions&#160;will&#160;allow&#160;the<br/>
+user&#160;to&#160;access&#160;to&#160;the&#160;contents&#160;of&#160;/home/artem/LIONS-master&#160;within&#160;the&#160;container.<br/>
+Alternatively&#160;you&#160;can&#160;load&#160;the&#160;resource&#160;files&#160;and&#160;data&#160;files&#160;into&#160;container&#160;at&#160;start-<br/>
+up.<br/>
+-v&#160;&lt;resource_directory&gt;:/LIONS-docker/resources/&lt;genomeName&gt;&#160;\<br/>-v&#160;&lt;data_directory&gt;:/LIONS-data/<br/>
+for&#160;example:<br/>
+-v&#160;~/hg19:/LIONS-docker/resources/hg19&#160;\<br/>-v&#160;~/ENCODE_bams/:/LIONS-data<br/>
+this&#160;will&#160;avoid&#160;adding&#160;resources&#160;to&#160;the&#160;image&#160;eachtime&#160;the&#160;container&#160;is&#160;run,&#160;or<br/>
+swelling&#160;the&#160;container&#160;size.<br/>
+3.1.&#160;Running&#160;LIONS&#160;using&#160;a&#160;parameter&#160;file<br/>
+The&#160;default&#160;parameter&#160;file&#160;for&#160;LIONS&#160;is&#160;/LIONS/controls/parameter.ctrl.<br/>
+However,&#160;the&#160;user&#160;can&#160;run&#160;LIONS&#160;with&#160;with&#160;a&#160;specified&#160;parameter&#160;file&#160;as&#160;follows:<br/>
+bash&#160;lions.sh&#160;&lt;path/to/parameter/ctrl&gt;<br/>
+N.B.&#160;As&#160;the&#160;docker&#160;container&#160;will&#160;not&#160;carry&#160;across&#160;changes&#160;to&#160;the&#160;file&#160;structure,&#160;such<br/>
+as&#160;saved&#160;output&#160;files,&#160;it&#160;is&#160;advised&#160;that&#160;the&#160;mount&#160;point&#160;identified&#160;with&#160;the&#160;-v&#160;option&#160;is<br/>used&#160;to&#160;save&#160;output&#160;files&#160;and&#160;modified&#160;parameter.ctrl&#160;and&#160;input.list&#160;files,&#160;in&#160;addition<br/>to&#160;supplying&#160;input&#160;files.<br/>
+5<br/>
+<hr/>
+<a name=6></a>3.2.&#160;Running&#160;LIONS&#160;using&#160;commandline&#160;options<br/>
+Lions&#160;can&#160;be&#160;run&#160;andline&#160;th&#160;commandline&#160;options&#160;using&#160;the&#160;lions_opt.sh&#160;script.&#160;Any<br/>options&#160;not&#160;provided&#160;on&#160;the&#160;commandline&#160;will&#160;be&#160;taken&#160;from&#160;the&#160;default&#160;parameter&#160;file.<br/>
+./lions_opt.sh&#160;[options]<br/>
+Where&#160;options&#160;include:<br/>
+-h&#160;—&#160;--help&#160;Show&#160;commandlines&#160;usage<br/>
+-P&#160;—&#160;--parameter&#160;Define&#160;user&#160;parameter.ctrl&#160;file,&#160;see&#160;section&#160;<a href="LIONS_UGs.html#8">4.2;&#160;</a>N.B.&#160;This&#160;option<br/>
+must&#160;be&#160;defined&#160;first&#160;in&#160;order&#160;that&#160;the&#160;other&#160;options&#160;are&#160;used&#160;correctly.<br/>
+-b&#160;—&#160;--base&#160;&lt;path&gt;&#160;Sets&#160;the&#160;LIONS&#160;base&#160;directory&#160;to&#160;be&#160;¡path¿,&#160;defaults&#160;to&#160;$PWD.<br/>
+-p&#160;—&#160;--project&#160;&lt;project-name&gt;&#160;Set&#160;name&#160;of&#160;the&#160;project,&#160;and&#160;therefore&#160;the&#160;output&#160;di-<br/>
+rectory&#160;name&#160;in&#160;the&#160;projects&#160;folder,&#160;to&#160;¡project&#160;name¿<br/>
+-i&#160;—&#160;--inputlist&#160;&lt;path/to/input.list&gt;&#160;Identifies&#160;the&#160;input&#160;file&#160;containing&#160;the&#160;sample<br/>
+names&#160;and&#160;input&#160;files&#160;for&#160;the&#160;analysis,&#160;see&#160;section&#160;<a href="LIONS_UGs.html#8">4.2</a><br/>
+--callsettings&#160;&lt;pre-set-name&gt;&#160;Tells&#160;LIONS&#160;which&#160;settings&#160;to&#160;use&#160;for&#160;the&#160;TE-initiation.<br/>
+Expected&#160;values&#160;include:<br/>
+’oncoexapatation’&#160;Detect&#160;high&#160;abundance&#160;TE&#160;isoforms<br/>
+’transcriptomeANN’&#160;Artifical&#160;Neural&#160;Network&#160;based&#160;classifier<br/>
+’screenTE’&#160;High&#160;sensitivity,&#160;low&#160;specificity&#160;detection<br/>
+’driverTE’&#160;TE-initiations&#160;as&#160;main&#160;drivers&#160;of&#160;gene-expression<br/>
+’custom’&#160;Use&#160;custom&#160;settings&#160;defined&#160;below<br/>
+default&#160;setting&#160;is&#160;’oncoexaptation’.<br/>
+-I&#160;—&#160;--index&#160;&lt;INDEX&gt;&#160;Sets&#160;the&#160;LIONS&#160;Resource&#160;index,&#160;see&#160;section&#160;<a href="LIONS_UGs.html#10">4.6.</a><br/>
+--geneset&#160;&lt;geneset.file&gt;&#160;Options&#160;identifies&#160;a&#160;ucsc&#160;formatted&#160;file&#160;containing&#160;a&#160;gene&#160;set<br/>
+to&#160;be&#160;used&#160;in&#160;the&#160;analysis,&#160;see&#160;section&#160;<a href="LIONS_UGs.html#10">4.6.</a><br/>
+--repeatmasker&#160;&lt;repeat.file&gt;&#160;Identifies&#160;a&#160;ucsc&#160;formatted&#160;file&#160;containing&#160;the&#160;repeat-<br/>
+Masker&#160;annotation&#160;for&#160;the&#160;genome,&#160;see&#160;section&#160;<a href="LIONS_UGs.html#10">4.6.</a><br/>
+--systemctrl&#160;&lt;system.ctrl&gt;&#160;Identifies&#160;the&#160;control&#160;file&#160;used&#160;for&#160;passing&#160;system&#160;settings<br/>
+to&#160;LIONS,&#160;see&#160;section&#160;<a href="LIONS_UGs.html#8">4.2</a><br/>
+--bowtie&#160;&lt;?&gt;&#160;?Additional&#160;Bowtie&#160;options?&#160;..&#160;or&#160;command?<br/>
+--alignbypass&#160;#&#160;binary&#160;switch&#160;to&#160;tell&#160;LIONS&#160;whether&#160;to&#160;run&#160;a&#160;new&#160;alignment&#160;on&#160;input<br/>
+files,&#160;or&#160;to&#160;use&#160;that&#160;provided&#160;in&#160;the&#160;input&#160;files.&#160;Default&#160;is&#160;‘1’.<br/>
+6<br/>
+<hr/>
+<a name=7></a>0&#160;Calculate&#160;a&#160;new&#160;alignment&#160;for&#160;the&#160;input<br/>
+1&#160;Do&#160;not&#160;re-calculate&#160;the&#160;alignment,&#160;simply&#160;create&#160;symbolic&#160;link&#160;to&#160;the&#160;bam&#160;file<br/>
+in&#160;&lt;input.list&gt;&#160;within&#160;the&#160;LIONS&#160;folder&#160;architecture<br/>
+--inread&#160;#&#160;The&#160;Inner&#160;Read&#160;distance&#160;to&#160;be&#160;used&#160;by&#160;Bowtie&#160;during&#160;alignment&#160;(Bowtie’s<br/>
+-r&#160;option).<br/>
+--threads&#160;#&#160;The&#160;number&#160;of&#160;parallel&#160;threads&#160;to&#160;be&#160;used&#160;by&#160;Tophat/Bowtie&#160;and&#160;Cufflinks<br/>
+during&#160;the&#160;analysis.&#160;N.B.&#160;presently&#160;it&#160;is&#160;necessary&#160;to&#160;ensure&#160;that&#160;the&#160;--threads<br/>option&#160;is&#160;passed&#160;after&#160;the&#160;--systemctrl,&#160;if&#160;both&#160;are&#160;used,&#160;in&#160;order&#160;to&#160;ensure&#160;the<br/>threads&#160;option&#160;is&#160;used&#160;correctly&#160;throughout&#160;the&#160;analysis.&#160;This&#160;will&#160;be&#160;corrected&#160;in<br/>future&#160;versions.<br/>
+--denovo&#160;#&#160;Tell&#160;Cufflinks&#160;whether&#160;to&#160;carry&#160;out&#160;a&#160;de&#160;novo&#160;or&#160;ab&#160;initio&#160;assembly,&#160;LIONS<br/>
+defaults&#160;to&#160;de&#160;novo.<br/>
+0&#160;Ab&#160;Initio<br/>
+1&#160;De&#160;Novo<br/>
+--minfrags&#160;#&#160;Set&#160;Cufflink’s&#160;‘minimum&#160;fragments&#160;per&#160;transfrag’,&#160;default&#160;is&#160;10.<br/>
+--multiflag&#160;#&#160;Set&#160;Cufflink’s&#160;‘multi-mapping&#160;transfrag&#160;fragments’&#160;option,&#160;default&#160;is&#160;0.75.<br/>
+--mintrim&#160;#&#160;Set&#160;Cufflink’s&#160;‘minimum&#160;coverage&#160;to&#160;attempt&#160;3‘&#160;trimming’&#160;option,&#160;default<br/>
+is&#160;10.<br/>
+--trimdrop&#160;#&#160;Set&#160;Cufflink’s&#160;‘minimum&#160;Trim&#160;dropoff&#160;in&#160;fraction’&#160;option.<br/>
+--merger&#160;#&#160;Set&#160;Cufflink’s&#160;‘merge&#160;radius&#160;in&#160;bp’,&#160;default&#160;is&#160;50&#160;bp.<br/>
+--quality&#160;&lt;qual&gt;&#160;RNAseq&#160;Analysis&#160;Quality,&#160;defined&#160;by&#160;the&#160;string&#160;‘q#.F#’&#160;where&#160;q&#160;=<br/>
+quality&#160;cutoff;&#160;F&#160;bam&#160;flags&#160;to&#160;discard,&#160;e.g.&#160;‘q10.F772’&#160;and&#160;‘q1.F1796’.<br/>
+7<br/>
+<hr/>
+<a name=8></a>4.&#160;LIONS&#160;File&#160;Architecture<br/>
+4.1.&#160;./<br/>
+base&#160;directory:&#160;LIONS&#160;is&#160;a&#160;self-contained&#160;pipeline&#160;and&#160;references&#160;needed&#160;by&#160;LIONS&#160;from<br/>the&#160;system&#160;are&#160;linked&#160;within&#160;this&#160;directory.<br/>
+./lions.sh&#160;&lt;parameter.ctrl&gt;&#160;The&#160;master&#160;script&#160;from&#160;which&#160;the&#160;entire&#160;pipeline&#160;is&#160;ran<br/>
+The&#160;script&#160;reads&#160;and&#160;processes&#160;all&#160;files&#160;in&#160;input.list&#160;and&#160;all&#160;parameters&#160;can&#160;be<br/>controlled&#160;from&#160;parameter.ctrl<br/>
+4.2.&#160;./controls<br/>
+Control&#160;Files:&#160;This&#160;folder&#160;contains&#160;project&#160;and&#160;system-specific&#160;parameters&#160;for&#160;running<br/>LIONS.&#160;There&#160;are&#160;three&#160;main&#160;files&#160;which&#160;need&#160;to&#160;be&#160;set-up,&#160;LIONS&#160;run&#160;parameters,<br/>system&#160;parameters&#160;and&#160;input&#160;RNA-seq&#160;libraries.<br/>
+./controls/parameter.ctrl&#160;A&#160;bash&#160;script&#160;which&#160;defines&#160;global&#160;project-specific&#160;variables<br/>
+such&#160;as&#160;Project&#160;Name,&#160;library&#160;input&#160;list&#160;etc...&#160;The&#160;.sysctrl&#160;and&#160;.list&#160;file&#160;are&#160;defined<br/>here&#160;as&#160;well<br/>
+./controls/system.sysctrl&#160;A&#160;bash&#160;script&#160;which&#160;defines&#160;global&#160;variables&#160;for&#160;all&#160;LIONS<br/>
+scripts.&#160;Also&#160;defines&#160;system-specific&#160;variables&#160;such&#160;as&#160;System&#160;Name,&#160;number&#160;of<br/>CPU&#160;cores&#160;etc...<br/>
+./controls/input.list&#160;A&#160;three&#160;column&#160;tab-delimited&#160;file&#160;defining:<br/>
+&lt;Library&#160;Name&gt;<br/>
+&lt;LibPath&gt;<br/>
+&lt;Grouping&gt;<br/>
+where&#160;Grouping&#160;is&#160;one&#160;of:<br/>
+1&#160;control<br/>
+2&#160;experimental<br/>
+3&#160;other<br/>
+..&#160;and&#160;&lt;libPath&gt;&#160;is&#160;either&#160;a&#160;paired&#160;end&#160;bam&#160;file,&#160;e.g.&#160;‘/home/libPath.bam’,&#160;or&#160;a<br/>pair&#160;of&#160;sorted&#160;fastQ&#160;files&#160;(as&#160;a&#160;comma&#160;seperated&#160;list),&#160;e.g.&#160;‘/home/lib.fq1,/home/lib.fq2’.<br/>
+4.3.&#160;./bin<br/>
+LIONS&#160;internal&#160;folder&#160;for&#160;symbolic&#160;links&#160;to&#160;binaries&#160;needed&#160;by&#160;the&#160;pipeline&#160;and&#160;script<br/>to&#160;initialize&#160;the&#160;folder.&#160;Make&#160;sure&#160;to&#160;set&#160;the&#160;correct&#160;commands&#160;for&#160;the&#160;software&#160;list&#160;in<br/>parameters.ctrl&#160;for&#160;your&#160;system<br/>
+4.4.&#160;./projects<br/>
+For&#160;each&#160;&lt;Project&#160;Name&gt;&#160;a&#160;single&#160;folder&#160;will&#160;be&#160;initilized&#160;in&#160;which&#160;the&#160;data&#160;will&#160;be<br/>organized.<br/>
+8<br/>
+<hr/>
+<a name=9></a>./projects/&lt;Project&#160;Name&gt;&#160;The&#160;main&#160;directory&#160;for&#160;this&#160;project.&#160;Each&#160;individual&#160;li-<br/>
+brary&#160;in&#160;the&#160;input&#160;will&#160;have&#160;a&#160;folder&#160;generated&#160;here&#160;called&#160;&lt;Library&gt;.<br/>
+./projects/&lt;Project&#160;Name&gt;/logs&#160;Folder&#160;contains&#160;run-specific&#160;information&#160;such&#160;as&#160;in-<br/>
+put&#160;file&#160;at&#160;time&#160;of&#160;run&#160;and&#160;a&#160;copy&#160;of&#160;the&#160;input&#160;parameter&#160;file&#160;at&#160;time&#160;of&#160;run.<br/>
+./projects/&lt;Project&#160;Name&gt;/Analysis(&#160;RUNID)&#160;Not&#160;implemented&#160;yet.&#160;This&#160;contains<br/>
+all&#160;data&#160;analysis&#160;for&#160;a&#160;run&#160;of&#160;LIONS.&#160;All&#160;graphs&#160;and&#160;project-wide&#160;.lions&#160;files&#160;are<br/>stored&#160;here<br/>
+./projects/&lt;Project&#160;Name&gt;/&lt;Library&gt;&#160;Library-specific&#160;data&#160;and&#160;primary&#160;analysis&#160;files.<br/>
+./projects/&lt;Project&#160;Name&gt;/&lt;Library&gt;/&lt;Library&gt;.lcsv&#160;Raw&#160;output&#160;file&#160;from&#160;LIONS<br/>
+containing&#160;all&#160;possible&#160;TE-Exon&#160;interaction&#160;data.&#160;This&#160;will&#160;include&#160;initiations,<br/>exonizations&#160;and&#160;terminations&#160;along&#160;with&#160;many&#160;calculated&#160;values&#160;about&#160;these&#160;loci<br/>from&#160;which&#160;LIONS&#160;will&#160;sort&#160;initiation&#160;events&#160;from&#160;the&#160;others.&#160;&lt;Library&gt;.pc.lcsv&#160;is<br/>the&#160;same&#160;file&#160;with&#160;additional&#160;information&#160;about&#160;overlapping&#160;protein&#160;coding&#160;genes.<br/>
+./projects/&lt;Project&#160;Name&gt;/&lt;Library&gt;/&lt;Library&gt;.lions&#160;Initiation&#160;only&#160;TE-exon&#160;data<br/>
+from&#160;post-sorting.&#160;This&#160;file&#160;is&#160;the&#160;complete&#160;list&#160;of&#160;transcripts&#160;initiated&#160;by&#160;TEs&#160;in<br/>this&#160;library.&#160;This&#160;data&#160;is&#160;passed&#160;on&#160;to&#160;the&#160;West&#160;Lion&#160;protocol&#160;to&#160;compare&#160;TE&#160;usage<br/>between&#160;libraries.<br/>
+./projects/&lt;Project&#160;Name&gt;/&lt;Library&gt;/alignment&#160;tophat2-generated&#160;alignment&#160;and<br/>
+the&#160;re-aligned&#160;.bam&#160;file&#160;which&#160;will&#160;be&#160;used&#160;for&#160;analysis.&#160;Also&#160;contains&#160;flagstats&#160;and<br/>log&#160;files.&#160;Note:&#160;Once&#160;the&#160;alignment&#160;is&#160;generated&#160;it&#160;will&#160;not&#160;be&#160;re-generated&#160;even<br/>if&#160;you&#160;change&#160;the&#160;alignment&#160;parameters&#160;in&#160;parameter.ctrl.&#160;To&#160;re-make&#160;alignments<br/>simply&#160;start&#160;the&#160;project&#160;with&#160;a&#160;new&#160;name&#160;or&#160;delete&#160;these&#160;files.<br/>
+./projects/&lt;Project&#160;Name&gt;/&lt;Library&gt;/assembly&#160;cufflinks-generated&#160;assembly&#160;in&#160;’tran-<br/>
+scripts.gtf’<br/>
+./projects/&lt;Project&#160;Name&gt;/&lt;Library&gt;/expression&#160;The&#160;output&#160;from&#160;a&#160;series&#160;of&#160;cus-<br/>
+tom&#160;scripts&#160;’RNAseqPipeline’&#160;which&#160;will&#160;generate&#160;wig&#160;files&#160;and&#160;perform&#160;RPKM<br/>calculations&#160;on&#160;a&#160;series<br/>
+./projects/&lt;Project&#160;Name&gt;/&lt;Library&gt;/resources&#160;Charlie-foxtrot&#160;of&#160;library-specific&#160;files<br/>
+used&#160;to&#160;calculate&#160;a&#160;score&#160;of&#160;parameters&#160;in&#160;the&#160;pipeline.<br/>
+4.5.&#160;./scripts<br/>
+Scripts:&#160;all&#160;scripts&#160;to&#160;run&#160;lions&#160;are&#160;held&#160;here&#160;except&#160;for&#160;the&#160;controlling&#160;lions.sh&#160;script<br/>which&#160;is&#160;in&#160;the&#160;base&#160;folder.&#160;Check&#160;initializeScripts.sh&#160;for&#160;complete&#160;list&#160;of&#160;scripts&#160;The<br/>main&#160;scripts&#160;are<br/>
+./scripts/eastLion.sh&#160;Alignment,&#160;Assembly,&#160;Chimeric&#160;Detection&#160;pipeline<br/>
+./scripts/westLion.sh&#160;LIONS&#160;analysis&#160;pipeline<br/>
+9<br/>
+<hr/>
+<a name=10></a>4.6.&#160;./resources<br/>
+Input&#160;files&#160;containg&#160;resource&#160;information&#160;needed&#160;for&#160;LIONS&#160;to&#160;run&#160;the&#160;analysis.&#160;The<br/>geneset&#160;and&#160;RepeatMasker&#160;files&#160;should&#160;be&#160;set&#160;in&#160;the&#160;parameter.ctrl&#160;file.<br/>
+./resources/&lt;INDEX&gt;/annotation/&lt;GENESET&gt;&#160;A&#160;ucsc&#160;formatted&#160;file&#160;containing&#160;a<br/>
+gene&#160;set&#160;to&#160;be&#160;used&#160;in&#160;the&#160;analysis&#160;(i.e.&#160;look&#160;for&#160;overlapping&#160;genes&#160;to&#160;transcripts)<br/>Download&#160;from:&#160;https://genome.ucsc.edu/cgi-bin/hgTables&#160;The&#160;standard&#160;annota-<br/>tion&#160;set&#160;used&#160;was&#160;RefSeq&#160;’RefGene’&#160;table.<br/>
+./resources/&lt;INDEX&gt;/genome/&lt;INDEX&gt;.fa&#160;The&#160;only&#160;requisite&#160;file&#160;here&#160;for&#160;running<br/>
+LIONS&#160;is&#160;a&#160;fasta&#160;formatted&#160;genome.&#160;This&#160;could&#160;be&#160;a&#160;symbolic&#160;link.&#160;LIONS&#160;will<br/>generate&#160;the&#160;other&#160;files&#160;necessary&#160;from&#160;INDEX.fa.<br/>
+If&#160;you&#160;have&#160;the&#160;.bt2&#160;index<br/>
+files&#160;already&#160;generated&#160;you&#160;can&#160;symbolically&#160;link&#160;them&#160;in&#160;this&#160;folder&#160;to&#160;skip&#160;re-<br/>generating&#160;them.<br/>
+./resources/&lt;INDEX&gt;/repeat/&lt;REPEATMASKER&gt;.ucsc&#160;a&#160;ucsc&#160;formatted&#160;file&#160;con-<br/>
+taining&#160;the&#160;repeatMasker&#160;annotation&#160;for&#160;the&#160;genome.<br/>
+(Download&#160;from&#160;UCSC<br/>
+genome&#160;browswer&#160;or&#160;format&#160;from&#160;RepeatMasker)&#160;Columns&#160;are;&#160;bin,&#160;swScore,<br/>milliDiv,&#160;milliDel,&#160;milliIns,&#160;genoName,&#160;genoStart,&#160;genoEnd,&#160;genoEnd,&#160;genoLeft,<br/>strand,&#160;repName,&#160;repClass,&#160;repFamily,&#160;repStart,&#160;repEnd,&#160;repLeft,&#160;id<br/>
+&lt;INDEX&gt;&#160;:&#160;the&#160;name&#160;of&#160;the&#160;index&#160;set.&#160;To&#160;be&#160;compatible&#160;with&#160;different&#160;genome<br/>
+versions,&#160;species&#160;and&#160;gene&#160;sets&#160;there&#160;can&#160;be&#160;different&#160;sets&#160;of&#160;data.&#160;The&#160;&lt;INDEX&gt;<br/>global&#160;variable&#160;is&#160;set&#160;in&#160;parameter.ctrl&#160;file.<br/>
+4.7.&#160;./software<br/>
+Packaged&#160;with&#160;LIONS&#160;is&#160;a&#160;few&#160;bits&#160;of&#160;software&#160;which&#160;will&#160;set-up&#160;your&#160;system&#160;to&#160;run<br/>the&#160;pipeline.&#160;Namely&#160;setuptools&#160;and&#160;pysam&#160;are&#160;the&#160;most&#160;challenging&#160;things&#160;to&#160;install.&#160;I<br/>found&#160;that&#160;it’s&#160;easiest&#160;to&#160;set-up&#160;the&#160;pipeline&#160;using&#160;pip&#160;and&#160;download&#160;the&#160;package&#160;pysam<br/>from&#160;there.&#160;Pysam&#160;is&#160;used&#160;to&#160;read&#160;teh&#160;bam&#160;files&#160;in&#160;the&#160;python&#160;scripts.<br/>
+10<br/>
+<hr/>
+<a name=11></a>5.&#160;LIONS&#160;Error&#160;Codes<br/>
+Error&#160;1&#160;Internal&#160;software&#160;error&#160;-&#160;Check&#160;last-run&#160;software.<br/>
+5.1.&#160;Initialization&#160;Codes<br/>
+Error&#160;2&#160;Initialization&#160;file&#160;missing&#160;or&#160;inaccesible&#160;-&#160;A&#160;file&#160;is&#160;missing&#160;or&#160;is&#160;unreadable.&#160;En-<br/>
+sure&#160;you&#160;have&#160;a&#160;complete&#160;version&#160;of&#160;LIONS&#160;and/or&#160;make&#160;the&#160;missing&#160;script&#160;read-<br/>able/exectable<br/>
+Error&#160;3&#160;A&#160;LIONS&#160;script&#160;is&#160;missing&#160;-&#160;A&#160;script&#160;is&#160;missing&#160;from&#160;./LIONS/scripts/;&#160;ensure<br/>
+your&#160;copy&#160;of&#160;LIONS&#160;is&#160;complete&#160;or&#160;redownload.<br/>
+Error&#160;4&#160;Initialization&#160;bin&#160;missing&#160;-&#160;A&#160;binary&#160;is&#160;not&#160;found&#160;on&#160;the&#160;system.&#160;Configure<br/>
+./LIONS/bin/initializeBin.sh&#160;for&#160;your&#160;system<br/>
+Error&#160;5&#160;A&#160;resource&#160;file&#160;is&#160;missing&#160;or&#160;unreadable&#160;-&#160;Checking/initialization&#160;of&#160;./LIONS/scripts.<br/>
+Error&#160;6&#160;A&#160;Python&#160;requisite&#160;is&#160;missing.<br/>
+Error&#160;7&#160;The&#160;input&#160;read&#160;file&#160;(.bam&#160;or&#160;.fastq)&#160;is&#160;non-readable&#160;or&#160;empty<br/>
+7A&#160;Bam&#160;file&#160;error<br/>
+7B&#160;FastQ&#160;file&#160;error.&#160;Ensure&#160;the&#160;two&#160;files&#160;are&#160;comma&#160;seperated&#160;in&#160;the&#160;input<br/>
+5.2.&#160;eastLion&#160;Error&#160;Codes<br/>
+Error&#160;10&#160;alignment&#160;not&#160;generated&#160;-&#160;An&#160;attempt&#160;was&#160;made&#160;to&#160;generate&#160;an&#160;alignment&#160;but<br/>
+the&#160;output&#160;file&#160;was&#160;empty&#160;at&#160;the&#160;end&#160;of&#160;the&#160;script<br/>
+Error&#160;12&#160;wig&#160;not&#160;generated&#160;-&#160;An&#160;attempt&#160;was&#160;made&#160;to&#160;generate&#160;the&#160;wig&#160;file&#160;but&#160;the<br/>
+output&#160;file&#160;wasn’t&#160;present&#160;after&#160;the&#160;script&#160;ran<br/>
+5.3.&#160;westLion&#160;Error&#160;Codes<br/>
+Error&#160;15&#160;A&#160;lions&#160;file&#160;wasn’t&#160;generated&#160;-&#160;In&#160;the&#160;run,&#160;one&#160;of&#160;the&#160;lions&#160;files&#160;wasn’t&#160;generated<br/>
+which&#160;means&#160;there&#160;was&#160;an&#160;error.&#160;Don’t&#160;run&#160;West&#160;Lions&#160;pipeline.<br/>
+11<br/>
+<hr/>
+<a name=12></a>6.&#160;LIONS&#160;output&#160;definitions<br/>
+6.1.&#160;Output&#160;File&#160;Types<br/>
+LIONS&#160;produces&#160;several&#160;outputs&#160;from&#160;different&#160;stages&#160;of&#160;the&#160;analysis&#160;in&#160;addition&#160;to&#160;the<br/>standard&#160;outputs&#160;one&#160;would&#160;expect&#160;(.bam&#160;/&#160;.gtf).<br/>
+‘&lt;library&gt;.lcsv’&#160;/&#160;‘.pc.lcsv’&#160;These&#160;are&#160;LIONS&#160;CSV&#160;files&#160;which&#160;contain&#160;the&#160;raw&#160;calcu-<br/>
+lations&#160;for&#160;all&#160;major&#160;numeric&#160;operations.&#160;This&#160;includes&#160;ALL&#160;TE-exon&#160;interac-<br/>tions&#160;types&#160;(Initiation,&#160;Exonization&#160;and&#160;Termination).&#160;As&#160;such&#160;there&#160;are&#160;usually<br/>hundreds&#160;of&#160;thousands&#160;of&#160;TEs&#160;which&#160;have&#160;read&#160;fragments&#160;joining&#160;them&#160;to&#160;some<br/>assembled&#160;exon.<br/>
+The&#160;‘.pc.’&#160;pre-suffix&#160;means&#160;the&#160;data&#160;has&#160;been&#160;intersected&#160;to&#160;the&#160;input&#160;set&#160;of&#160;protein<br/>coding&#160;genes.<br/>
+Use&#160;this&#160;file&#160;for&#160;re-calculating&#160;“TE-Initiations”&#160;with&#160;new&#160;parameters.<br/>
+‘&lt;library&gt;.lion’&#160;This&#160;is&#160;the&#160;filtered&#160;set&#160;of&#160;TE-exon&#160;interactions&#160;which&#160;have&#160;been&#160;classified<br/>
+as&#160;“TE-Initiations”&#160;or&#160;TE&#160;transcription&#160;start&#160;sites.&#160;This&#160;is&#160;per-library&#160;input.<br/>
+‘&lt;project&gt;.lions’&#160;A&#160;merged&#160;file&#160;of&#160;several&#160;‘.lion’&#160;files&#160;combining&#160;biological&#160;groups&#160;defined<br/>
+in&#160;the&#160;‘input.list’.&#160;A&#160;good&#160;example&#160;of&#160;this&#160;is&#160;merging&#160;10&#160;cancer&#160;libraries&#160;and&#160;10<br/>normal&#160;libraries&#160;and&#160;outputing&#160;only&#160;those&#160;TE-initiations&#160;which&#160;are&#160;in&#160;at&#160;least<br/>20%&#160;of&#160;Cancer&#160;and&#160;no&#160;Normal&#160;libraries.&#160;These&#160;parameters&#160;can&#160;be&#160;changed&#160;in&#160;the<br/>‘paramter.ctrl’&#160;input.<br/>
+‘&lt;project&gt;.rslions’&#160;The&#160;‘rs’&#160;is&#160;for&#160;Recurrent&#160;and&#160;Specific&#160;TE-initiations&#160;only.&#160;That&#160;is&#160;if<br/>
+you&#160;compare&#160;the&#160;set&#160;of&#160;libraries&#160;1&#160;(Normal)&#160;vs&#160;set&#160;2&#160;(Cancer),&#160;this&#160;contains&#160;only<br/>those&#160;TE-initiations&#160;which&#160;occur&#160;multiple&#160;times&#160;in&#160;Cancer&#160;(recurrant)&#160;and&#160;do&#160;not<br/>occur&#160;in&#160;Normal&#160;(specific).&#160;As&#160;defined&#160;by&#160;‘$cgGroupRecurrence’&#160;and&#160;‘$cgSpeci-<br/>ficity’&#160;in&#160;the&#160;‘paramter.ctrl’&#160;file.<br/>
+‘&lt;project&gt;.inv.rslions’&#160;The&#160;‘.inv.’&#160;pre-suffix&#160;is&#160;simply&#160;the&#160;inverse&#160;of&#160;the&#160;‘.rslion’&#160;file.<br/>
+So&#160;instead&#160;of&#160;“Cancer&#160;vs.&#160;Normal”,&#160;“Normal&#160;vs.&#160;Cancer”.&#160;A&#160;necessary&#160;control&#160;if<br/>one&#160;makes&#160;any&#160;conclusions&#160;based&#160;on&#160;enrichment/depletion.<br/>
+6.2.&#160;Output&#160;Columns<br/>
+6.2.1.&#160;‘&lt;project&gt;.lions’<br/>
+Most&#160;columns&#160;should&#160;be&#160;self-explanatory,&#160;some&#160;are&#160;not.<br/>
+transcriptID&#160;Unique&#160;identifier&#160;for&#160;the&#160;transcript&#160;(isoform).&#160;Usually&#160;taken&#160;from&#160;the&#160;as-<br/>
+sembly/reference&#160;transcriptome<br/>
+exonRankInTranscript&#160;For&#160;each&#160;TE-exon&#160;interaction&#160;combination&#160;(row)&#160;which&#160;exon&#160;in<br/>
+the&#160;‘transcriptID’&#160;is&#160;this&#160;row&#160;referring&#160;to<br/>
+12<br/>
+<hr/>
+<a name=13></a>repeatName&#160;The&#160;&lt;repeat&#160;name&gt;:&lt;repeat&#160;class&gt;:&lt;repeat&#160;family&gt;&#160;taken&#160;from&#160;input<br/>
+set<br/>
+coordinates&#160;Useful&#160;coordinates&#160;for&#160;visualizing&#160;the&#160;interaction.&#160;It&#160;starts/ends&#160;in&#160;the&#160;exon<br/>
+and&#160;repeat&#160;so&#160;when&#160;opening&#160;in&#160;a&#160;visualization&#160;tool&#160;you&#160;can&#160;see&#160;the&#160;reads&#160;spanning<br/>this&#160;area.<br/>
+ER&#160;Interaction:&#160;The&#160;type&#160;of&#160;relative&#160;intersection&#160;in&#160;the&#160;genome&#160;between&#160;the&#160;exon<br/>and&#160;the&#160;repeat.&#160;Definitions&#160;are&#160;relative&#160;to&#160;the&#160;exon.&#160;Can&#160;be&#160;“Up”,&#160;“UpEdge”,<br/>“EInside”,&#160;“RInside”,&#160;“Down”,&#160;“DownEdge”.<br/>
+IsExonic&#160;??<br/>
+ExonsOverlappingWithRepeat&#160;A&#160;list&#160;of&#160;&lt;transcriptID:exonRank&gt;&#160;which&#160;overlap&#160;the<br/>
+repeat.<br/>
+ER&#160;/&#160;DR&#160;/&#160;DE&#160;/&#160;DD&#160;/&#160;Total&#160;A&#160;count&#160;of&#160;the&#160;number&#160;of&#160;TE-Exon&#160;sequence&#160;fragments<br/>
+which&#160;join&#160;this&#160;rows&#160;TE&#160;and&#160;Exon.&#160;ER&#160;means&#160;that&#160;one&#160;end&#160;overlaps&#160;the&#160;Exon&#160;and<br/>one&#160;end&#160;overlaps&#160;the&#160;Repeat&#160;exclusively,&#160;DD&#160;means&#160;that&#160;both&#160;ends&#160;of&#160;the&#160;fragment<br/>overlap&#160;both&#160;(dual)&#160;exon&#160;and&#160;repeat&#160;...<br/>
+Chromosome&#160;/&#160;EStart&#160;/&#160;EEnd&#160;/&#160;EStrand&#160;Start,&#160;end&#160;and&#160;strand&#160;of&#160;the&#160;exon<br/>
+RStart&#160;/&#160;REnd&#160;/&#160;RStrand&#160;Start,&#160;end&#160;and&#160;strand&#160;of&#160;the&#160;repeat<br/>
+RepeatRank&#160;Relative&#160;exon/intron&#160;position&#160;of&#160;the&#160;repeat&#160;to&#160;the&#160;contig<br/>
+UpExonStart&#160;/&#160;UpExonEnd&#160;Coordinates&#160;used&#160;for&#160;calculating&#160;expression&#160;of&#160;genome&#160;im-<br/>
+mediatly&#160;adjacent&#160;an&#160;exon&#160;boundary.<br/>
+Useful&#160;for&#160;quantifying&#160;read-&#160;through&#160;or<br/>
+spurious&#160;transcriptional&#160;events.<br/>
+UpThread&#160;The&#160;number&#160;of&#160;read&#160;’threads’&#160;going&#160;upstream&#160;of&#160;the&#160;exon.&#160;See&#160;Manuscript<br/>
+for&#160;a&#160;figure&#160;explaining&#160;this.<br/>
+DownThread&#160;The&#160;number&#160;of&#160;read&#160;’threads’&#160;going&#160;downstream&#160;of&#160;the&#160;exon.&#160;See&#160;Manuscript<br/>
+for&#160;a&#160;figure&#160;explaining&#160;this.<br/>
+ExonRPKM&#160;RPKM&#160;calculation&#160;for&#160;this&#160;exon<br/>
+ExonMax&#160;The&#160;maximum&#160;coverage&#160;count&#160;reached&#160;within&#160;the&#160;exon&#160;boundaries.&#160;Often<br/>
+more&#160;reliable&#160;measure&#160;of&#160;expression&#160;then&#160;RPKM&#160;for&#160;small&#160;exons.<br/>
+UpExonRPKM&#160;/&#160;UpExonMax&#160;The&#160;expression&#160;of&#160;the&#160;exon&#160;immediatly&#160;upstream&#160;of&#160;the<br/>
+one&#160;this&#160;row&#160;is&#160;referring&#160;to.&#160;(i.e.&#160;Exon&#160;1&#160;expression&#160;if&#160;the&#160;row&#160;refers&#160;to&#160;Exon&#160;2).<br/>Useful&#160;for&#160;quantifying&#160;the&#160;relative&#160;increase&#160;in&#160;expression&#160;when&#160;a&#160;TE&#160;is&#160;acting&#160;as<br/>an&#160;alternative&#160;promoter&#160;into&#160;a&#160;downstream&#160;exon.<br/>
+RepeatRPKM&#160;/&#160;RepeatMaxCoverage&#160;Expression&#160;level&#160;within&#160;repeat&#160;boundaries.<br/>
+13<br/>
+<hr/>
+<a name=14></a>UpstreamRepeatRPKM&#160;/&#160;UpstreamRepeatMaxCoverage&#160;The&#160;expression&#160;adjacent&#160;to<br/>
+the&#160;repeat,&#160;a&#160;test&#160;for&#160;background&#160;expression&#160;levels.<br/>
+RefID&#160;When&#160;intersecting&#160;to&#160;a&#160;reference&#160;gene&#160;set,&#160;the&#160;gene&#160;symbol&#160;of&#160;any&#160;genes&#160;which<br/>
+intersect&#160;the&#160;area&#160;between&#160;the&#160;Exon-Repeat&#160;coordinates.<br/>
+RefStrand&#160;Strand&#160;of&#160;the&#160;reference&#160;genes&#160;defined&#160;above<br/>
+assXref&#160;The&#160;strand-relationship&#160;between&#160;the&#160;reference&#160;gene&#160;and&#160;the&#160;contig&#160;exon&#160;This&#160;ac-<br/>
+counts&#160;for&#160;anti-sense&#160;long&#160;non-coding&#160;RNA&#160;(as),&#160;or&#160;transcripts&#160;which&#160;run&#160;anti-sense<br/>to&#160;the&#160;reference&#160;gene.&#160;(s)&#160;is&#160;sense&#160;and&#160;(c)&#160;means&#160;complex,&#160;often&#160;some&#160;combination<br/>of&#160;multiple&#160;genes.&#160;(u)&#160;means&#160;it&#160;could&#160;not&#160;be&#160;determined.<br/>
+Contribution&#160;An&#160;estimate&#160;of&#160;the&#160;promoter&#160;contribution&#160;of&#160;this&#160;Repeat&#160;TSS&#160;to&#160;the&#160;ex-<br/>
+pression&#160;of&#160;gene&#160;in&#160;total.&#160;Calculated&#160;with&#160;ExonMax&#160;and&#160;UpExonMax.<br/>
+UpCov&#160;Ratio&#160;of&#160;the&#160;coverage&#160;adjacent&#160;to&#160;an&#160;exon&#160;and&#160;the&#160;exon&#160;expression<br/>
+UpExonRatio&#160;Ratio&#160;of&#160;hte&#160;expression&#160;of&#160;the&#160;exon&#160;and&#160;it’s&#160;upstream&#160;exon<br/>
+ThreadRatio&#160;DownThread&#160;/&#160;UpThread.&#160;Set&#160;to&#160;[10]&#160;if&#160;dividing&#160;by&#160;zero.<br/>
+RepeatID&#160;A&#160;unique&#160;Identifer&#160;for&#160;each&#160;Repeat&#160;in&#160;the&#160;genome&#160;(left-most&#160;coordinate).<br/>
+Can&#160;repeat&#160;and&#160;thus&#160;be&#160;used&#160;for&#160;determining&#160;one&#160;repeat&#160;inititating&#160;a&#160;trancsript&#160;in<br/>different&#160;assemblies.<br/>
+LIBRARY&#160;Library&#160;from&#160;which&#160;this&#160;repeat-exon&#160;interaction&#160;was&#160;calculated&#160;from.<br/>
+6.2.2.&#160;‘&lt;project&gt;.rslions’<br/>
+Normal&#160;occ&#160;Number&#160;of&#160;times&#160;each&#160;TE-initiation&#160;was&#160;found&#160;in&#160;the&#160;”normal”&#160;set&#160;of&#160;li-<br/>
+braries.&#160;(Usually&#160;set&#160;1)<br/>
+Cancer&#160;occ&#160;Number&#160;of&#160;times&#160;each&#160;TE-initiation&#160;was&#160;found&#160;in&#160;the&#160;”cancer”&#160;set&#160;of&#160;li-<br/>
+braries.&#160;(Usually&#160;set&#160;2)<br/>
+Library&#160;A&#160;semi-colon&#160;seperated&#160;list&#160;of&#160;the&#160;LIBRARY&#160;identifiers&#160;in&#160;which&#160;each&#160;TE-<br/>
+initiation&#160;was&#160;found&#160;in.<br/>
+14<br/>
+<hr/>
+<a name=15></a>A.&#160;Appendices<br/>
+A.1.&#160;Running&#160;Docker&#160;on&#160;the&#160;command&#160;line<br/>
+Often&#160;it&#160;is&#160;useful&#160;to&#160;detach&#160;the&#160;running&#160;Docker&#160;container&#160;from&#160;the&#160;terminal;&#160;this&#160;can<br/>be&#160;acheived&#160;in&#160;a&#160;number&#160;of&#160;ways.&#160;The&#160;official&#160;Docker&#160;method&#160;is&#160;to&#160;detach&#160;the&#160;terminal<br/>using<br/>
+Ctrl-p&#160;Ctrl-q<br/>to&#160;disconnect,&#160;however&#160;this&#160;is&#160;dependent&#160;on&#160;using&#160;the&#160;-t&#160;option&#160;when&#160;running&#160;the<br/>
+container.&#160;Once&#160;detached&#160;the&#160;user&#160;can&#160;reconnect&#160;to&#160;the&#160;container&#160;using<br/>
+docker&#160;attach&#160;&lt;container-id&#160;or&#160;name&#160;&gt;<br/>
+It&#160;is&#160;possible&#160;to&#160;name&#160;a&#160;docker&#160;container&#160;using&#160;the&#160;-n&#160;&lt;name&gt;&#160;option&#160;to&#160;the&#160;docker&#160;run<br/>
+command.&#160;However&#160;where&#160;the&#160;container&#160;name&#160;is&#160;not&#160;specified&#160;or&#160;known,&#160;the&#160;container-id<br/>can&#160;be&#160;found&#160;using&#160;the&#160;docker&#160;ps&#160;command.<br/>
+The&#160;author&#160;prefers&#160;using&#160;GNU&#160;Screen&#160;as&#160;it&#160;is&#160;capable&#160;of&#160;presenting&#160;a&#160;split&#160;screen<br/>
+allowing&#160;the&#160;user&#160;to&#160;monitor&#160;LIONS&#160;whilst&#160;continuing&#160;to&#160;work.&#160;Screen&#160;is&#160;invoked&#160;using<br/>the&#160;command&#160;screen&#160;which&#160;opens&#160;a&#160;virtual&#160;terminal,&#160;the&#160;LIONS&#160;docker&#160;can&#160;then&#160;be<br/>run&#160;as&#160;described&#160;in&#160;section&#160;<a href="LIONS_UGs.html#5">3.</a><br/>
+Screen&#160;sessions&#160;can&#160;be&#160;detached&#160;using&#160;Ctrl-a&#160;d&#160;and&#160;reconnected&#160;using&#160;screen&#160;-r.<br/>A&#160;single&#160;screen&#160;session&#160;allows&#160;a&#160;user&#160;to&#160;simultaneously&#160;run&#160;multiple&#160;virtual&#160;terminals;<br/>
+known&#160;as&#160;‘windows’.&#160;New&#160;windows&#160;are&#160;created&#160;within&#160;a&#160;session&#160;using&#160;Ctrl-a&#160;c,&#160;whilst<br/>Ctrl-a&#160;n&#160;and&#160;Ctrl-a&#160;p&#160;allow&#160;the&#160;user&#160;to&#160;switch&#160;between&#160;windows&#160;within&#160;a&#160;session.<br/>
+Screen&#160;is&#160;able&#160;to&#160;split&#160;the&#160;terminal&#160;view&#160;vertically&#160;using&#160;Ctrl-a&#160;|&#160;or&#160;Ctrl-a&#160;V,&#160;de-<br/>
+pending&#160;on&#160;the&#160;implementation;&#160;Ctrl-a&#160;S&#160;can&#160;be&#160;used&#160;to&#160;split&#160;the&#160;window&#160;horizontally.<br/>Once&#160;split&#160;the&#160;user&#160;can&#160;switch&#160;between&#160;view&#160;regions&#160;using&#160;Ctrl-a&#160;Tab.<br/>
+15<br/>
+<hr/>
+<a name="outline"></a><h1>Document Outline</h1>
+<ul>
+<li><a href="LIONS_UGs.html#2">LIONS Pipeline Architecture</a></li>
+<li><a href="LIONS_UGs.html#2">LIONS Installation</a>
+<ul>
+<li><a href="LIONS_UGs.html#2">LIONS Container (Docker)</a></li>
+<li><a href="LIONS_UGs.html#3">LIONS Command Line</a></li>
+<li><a href="LIONS_UGs.html#3">Initializing LIONS Resources</a></li>
+</ul>
+</li>
+<li><a href="LIONS_UGs.html#5">Running LIONS</a>
+<ul>
+<li><a href="LIONS_UGs.html#5">Running LIONS using a parameter file</a></li>
+<li><a href="LIONS_UGs.html#6">Running LIONS using commandline options</a></li>
+</ul>
+</li>
+<li><a href="LIONS_UGs.html#8">LIONS File Architecture</a>
+<ul>
+<li><a href="LIONS_UGs.html#8">./</a></li>
+<li><a href="LIONS_UGs.html#8">./controls</a></li>
+<li><a href="LIONS_UGs.html#8">./bin</a></li>
+<li><a href="LIONS_UGs.html#8">./projects</a></li>
+<li><a href="LIONS_UGs.html#9">./scripts</a></li>
+<li><a href="LIONS_UGs.html#10">./resources</a></li>
+<li><a href="LIONS_UGs.html#10">./software</a></li>
+</ul>
+</li>
+<li><a href="LIONS_UGs.html#11">LIONS Error Codes</a>
+<ul>
+<li><a href="LIONS_UGs.html#11">Initialization Codes</a></li>
+<li><a href="LIONS_UGs.html#11">eastLion Error Codes</a></li>
+<li><a href="LIONS_UGs.html#11">westLion Error Codes</a></li>
+</ul>
+</li>
+<li><a href="LIONS_UGs.html#12">LIONS output definitions</a>
+<ul>
+<li><a href="LIONS_UGs.html#12">Output File Types</a></li>
+<li><a href="LIONS_UGs.html#12">Output Columns</a>
+<ul>
+<li><a href="LIONS_UGs.html#12">`&lt;project&gt;.lions'</a></li>
+<li><a href="LIONS_UGs.html#14">`&lt;project&gt;.rslions'</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="LIONS_UGs.html#15">Appendices</a>
+<ul>
+<li><a href="LIONS_UGs.html#15">Running Docker on the command line</a></li>
+</ul>
+</li>
+</ul>
+<hr/>
+</body>
+</html>

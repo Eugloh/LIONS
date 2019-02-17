@@ -1,2 +1,1 @@
-gm12878	/LIONS-data/GM12878.rep1.R1.fastq.gz,/LIONS-data/GM12878.rep1.R2.fastq.gz	1
-k562	/LIONS-data/K562.rep1.R1.fastq.gz,/LIONS-data/K562.rep1.R2.fastq.gz	2
+k562	/data/home/elohmann/PROJET_S2/LIONS/LIONS-data/ENCFF001RED.fastq.gz,/data/home/elohmann/PROJET_S2/LIONS/LIONS-data/ENCFF001RDZ.fastq.gz	2

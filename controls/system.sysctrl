@@ -23,7 +23,7 @@
 	# <gsc> = run with qsub commands on the gsc genesis cluster
 	# <local> = run on local machine.
 
-	export THREADS='1' # number of CPU cores to use
+	export THREADS='8' # number of CPU cores to use
 
 # Cluster Specific Commands
 	if [ $SYSTEM == 'gsc' ]

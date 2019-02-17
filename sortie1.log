@@ -1,0 +1,548 @@
+
+
+===============================================================
+========================= L I O N S ===========================
+===============================================================
+                             _   _
+                           _/ \|/ \_
+                          /\\/   \//\
+                          \|/<\ />\|/   *RAWR*
+                          /\   _   /\  /
+                          \|/\ Y /\|/
+                           \/|v-v|\/
+                            \/\_/\/
+
+
+ Import parameter file.
+    Project Parameters: .//data/home/elohmann/PROJET_S2/LIONS/controls/parameter2.ctrl
+
+ running initializeLIONS.sh
+
+ ./LIONS/scripts/initilizeLIONS.sh ...
+ ==============================================================
+     Project Name: hg38_10M_2 
+     Run Identification Number: 190214_1325
+     Library List: /data/home/elohmann/PROJET_S2/LIONS/controls/input.list
+     Genome: hg38_2 
+     System: glitch
+             cores: 6
+             qsub:  (if applicable)
+     LIONS base dir: /data/home/elohmann/PROJET_S2/LIONS
+     Call Settings: oncoexaptation
+
+ ------ Run LIONS self-check procedures ------ 
+
+ Initialize/initializeScripts.sh found.
+ ... checking scripts
+     Check that LIONS scripts exist and are read/executable
+
+... /data/home/elohmann/PROJET_S2/LIONS/controls/input.list found.
+... /data/home/elohmann/PROJET_S2/LIONS/controls/parameter2.ctrl found.
+... /data/home/elohmann/PROJET_S2/LIONS/controls/system.sysctrl found.
+... Initialize/initializeLIONS.sh found.
+... Initialize/initializeScripts.sh found.
+... Initialize/initializeBin.sh found.
+... Initialize/initializeRes.sh found.
+... eastLion.sh found.
+... westLion.sh found.
+... RNAseqPipeline/RNAseqMaster.sh found.
+... RNAseqPipeline/RNAseqCoverageCalculator.sh found.
+... RNAseqPipeline/RNAgetRes.sh found.
+... RNAseqPipeline/RNAseqPipeline.sh found.
+... RNAseqPipeline/RPKM.sh found.
+... RNAseqPipeline/TE_stats.sh found.
+... RNAseqPipeline/WIG_RPKM.sh found.
+... RNAseqPipeline/resourceGeneration/buildResources.sh found.
+... RNAseqPipeline/resourceGeneration/buildResourceGTF.sh found.
+... RNAseqPipeline/resourceGeneration/RepeatMaskerGenerate.sh found.
+... RNAseqPipeline/resourceGeneration/RefSeqGenerate.sh found.
+... ChimericReadTool/ChimericReadTool.sh found.
+... ChimericReadTool/exon_scan.sh found.
+... ChimericReadTool/intervalTree.py found.
+... ChimericReadTool/chimericReadSearch.py found.
+... ChimericReadTool/chimIntersect.sh found.
+... ChimericReadTool/chimIntLookup.R found.
+... ChimericReadTool/chimSort.R found.
+... ChimericAnalysis/chimGroup.R found.
+
+ ... script check completed successfully!
+
+ ... checking binaries
+     Using default binary initilization file
+ initializeBin.sh found.
+ attempting to run initializeBin.sh
+     Check that system software requirements are available and working.
+
+... samtools_0.1.18 found.
+... bam2fastx found.
+... tophat2 found.
+... bowtie2 found.
+... bowtie2-build found.
+... cufflinks found.
+... python3 found.
+... java found.
+... Rscript found.
+... /data/home/elohmann/PROJET_S2/LIONS/software/wigToBigWig found.
+
+     Check Python3 Modules are installed
+ ... csv python3 module found
+ ... setuptools python3 module found
+ ... pysam python3 module found
+ ... sys python3 module found
+ ... pickle python3 module found
+ ... os python3 module found
+ ... pprint python3 module found
+ ... threading python3 module found
+ ... collections python3 module found
+ ... multiprocessing python3 module found
+ ... datetime python3 module found
+ ... re python3 module found
+ ... binary check completed successfully!
+
+ ... checking resource: hg38_2 
+     Check genome files, repeat files and annotations are in order
+
+... hg38_2.fa found.
+... rm_hg38.ucsc found.
+... refseq_hg38.ucsc found.
+ ... resource check completed successfully!
+
+ ---------- Set-up Project Workspace ---------- 
+ Initializing hg38_10M_2 Directory: /data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2
+/data/home/elohmann/PROJET_S2/LIONS/controls/input.list /data/home/elohmann/PROJET_S2/LIONS/controls/parameter2.ctrl
+ initialization completed successfully.
+
+
+                     E A S T       L I O N                     
+
+ ./LIONS/scripts/eastLion.sh 
+===============================================================
+  Align reads to genome and perform TE-initiation analysis
+
+ Iteration 1: k562 ------------------------------------------
+      run:  eastLion.sh k562
+     ... eastLion.sh running
+     Library: k562
+     Output Directory: /data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2/k562
+     Working Directory: /data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2/k562
+     Alignment Bypass: 1
+
+  No previous alignment detected
+  Aligning reads to the genome
+     Bam (or fq) input type: 
+     Bam output: k562.bam
+     Genome: hg38_2
+ Running tophat2 ...
+  cmd: /data/home/elohmann/PROJET_S2/LIONS/bin/tophat2   -p 6 -r 50 --report-secondary-alignments -o /data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2/k562 hg38_2 /data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2/k562/temp.1.fq.gz /data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2/k562/temp.2.fq.gz
+Alignment likely completed successfully!
+ ... tophat2 completed.
+
+Bam processing succesful
+  No assembly detected
+     Bam input: k562.bam
+     Label: k562
+     Genome: hg38_2
+     De Novo Assembly
+     Controls:     -u -p 6 --min-frags-per-transfrag 10 --max-multiread-fraction 0.99 --trim-3-avgcov-thresh 5 --trim-3-dropoff-frac=0.1 --overlap-radius 50
+ Running Cufflinks ...
+   cmd: /data/home/elohmann/PROJET_S2/LIONS/bin/cufflinks -o ./assembly -L k562 -u -p 6 --min-frags-per-transfrag 10 --max-multiread-fraction 0.99 --trim-3-avgcov-thresh 5 --trim-3-dropoff-frac=0.1 --overlap-radius 50 k562.bam
+ ... cufflinks completed.
+  Building resources for k562
+ Generating resource data for transcripts.gtf with the name assembly
+Precursor files generated
+ Running EnsembleResourceGenerated.sh
+Thu Feb 14 13:57:19 CET 2019
+Running - /data/home/elohmann/PROJET_S2/LIONS/scripts/RNAseqPipeline/resourceGeneration/EnsemblResourceGenerator.sh
+assembly_exons exists
+assembly_exons_for_genes - is being generated...
+Transcripts ...
+Genes ...
+Coverage ...
+Single/multi exonic transcripts...
+Boundaries...
+assembly_genes exists
+Genes for introns...
+Genes for coverage...
+Gene types..
+mt
+nc
+pc
+rb
+assembly_transcripts exists
+ RNAseq Pipeline Analysis
+     cmd: RNAseqPipeline.sh assembly k562 R k562.bam
+=======  Run Parameters  ========
+ bamFile: k562.bam
+ species: assembly
+ name: k562
+ read length: 101 bp
+ resource folder: /data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2/k562/resources
+ chr sizes: /data/home/elohmann/PROJET_S2/LIONS/resources/hg38_2/genome/hg38_2.chr.size
+ chr name conv: /data/home/elohmann/PROJET_S2/LIONS/resources/hg38_2/genome/hg38_2.bwa.names
+
+ cmd: 
+ sh /data/home/elohmann/PROJET_S2/LIONS/scripts/RNAseqPipeline/RNAseqMaster.sh k562.bam k562 pwd assembly R 0 1,1,0,0,1 /data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2/k562/resources /data/home/elohmann/PROJET_S2/LIONS/resources/hg38_2/genome/hg38_2.chr.size /data/home/elohmann/PROJET_S2/LIONS/resources/hg38_2/genome/hg38_2.bwa.names
+
+Thu Feb 14 13:57:19 CET 2019
+Running - /data/home/elohmann/PROJET_S2/LIONS/scripts/RNAseqPipeline/RNAseqMaster.sh
+
+/data/home/elohmann/PROJET_S2/LIONS/bin/java -jar -Xmx6G /data/home/elohmann/PROJET_S2/LIONS/scripts/RNAseqPipeline/bin/BAM2WIG.jar -bamFile k562.bam -out /data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2/k562/expression/wig -q 10 -F 772 -samtools /data/home/elohmann/PROJET_S2/LIONS/bin/samtools -chr /data/home/elohmann/PROJET_S2/LIONS/resources/hg38_2/genome/hg38_2.bwa.names >> /data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2/k562/expression/wig/k562.wig.log
+
+
+Calculating Genomic Coverage...
+/data/home/elohmann/PROJET_S2/LIONS/scripts/RNAseqPipeline/RNAseqCoverageCalculator.sh k562 /data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2/k562/expression/wig /data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2/k562/expression/coverage assembly R /data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2/k562/expression/coverage/k562.coverage.log /data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2/k562/resources /data/home/elohmann/PROJET_S2/LIONS/resources/hg38_2/genome/hg38_2.chr.size
+
+Thu Feb 14 13:57:56 CET 2019
+Running RNAseqCoverageCalculator - /data/home/elohmann/PROJET_S2/LIONS/scripts/RNAseqPipeline/RNAseqCoverageCalculator.sh ------------
+Run Parameters
+     Name: k562
+     Wigd: /data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2/k562/expression/wig
+     output: /data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2/k562/expression/coverage
+     Reference Set: assembly
+     S/R: R
+     res: /data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2/k562/resources
+     chrSize: /data/home/elohmann/PROJET_S2/LIONS/resources/hg38_2/genome/hg38_2.chr.size
+
+
+ Check that wig file was generated
+ /data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2/k562/expression/wig/k562.q*.F*.wig.gz exists
+
+Running RegionsCoverageFromWigCalculator
+
+/data/home/elohmann/PROJET_S2/LIONS/bin/java -jar -Xmx5G /data/home/elohmann/PROJET_S2/LIONS/scripts/RNAseqPipeline/bin/RegionsCoverageFromWigCalculator.jar -w /data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2/k562/expression/wig/k562.q*.F*.wig.gz -r /data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2/k562/resources/assembly_genes_for_introns -s /data/home/elohmann/PROJET_S2/LIONS/resources/hg38_2/genome/hg38_2.chr.size -o /data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2/k562/expression/coverage -n k562
+$Id: RegionsCoverageFromWigCalculator.java 82545 2012-08-09 04:05:11Z mbilenky $
+Loading chromosome lengths from /data/home/elohmann/PROJET_S2/LIONS/resources/hg38_2/genome/hg38_2.chr.size
+Lengths for 455 chromosomes are loaded
+load /data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2/k562/resources/assembly_genes_for_introns
+389 regions loaded from file
+Profiling chr 1 (248956422)
+Output coverages for 48 regions on chr1
+Profiling chr 10 (133797422)
+Output coverages for 12 regions on chr10
+Profiling chr 11 (135086622)
+Output coverages for 32 regions on chr11
+Profiling chr 12 (133275309)
+Skipping analysis on chr 12_GL877875v1_alt because this chr was not included in the region file
+Output coverages for 23 regions on chr12
+Profiling chr 13 (114364328)
+Output coverages for 3 regions on chr13
+Profiling chr 14 (107043718)
+Output coverages for 8 regions on chr14
+Profiling chr 15 (101991189)
+Output coverages for 7 regions on chr15
+Profiling chr 16 (90338345)
+Output coverages for 17 regions on chr16
+Profiling chr 17 (83257441)
+Skipping analysis on chr 17_GL000205v2_random because this chr was not included in the region file
+Output coverages for 25 regions on chr17
+Profiling chr 18 (80373285)
+Output coverages for 3 regions on chr18
+Profiling chr 19 (58617616)
+Output coverages for 42 regions on chr19
+Profiling chr 2 (242193529)
+Output coverages for 19 regions on chr2
+Profiling chr 20 (64444167)
+Output coverages for 6 regions on chr20
+Profiling chr 21 (46709983)
+Output coverages for 4 regions on chr21
+Profiling chr 22 (50818468)
+Skipping analysis on chr 22_KI270879v1_alt because this chr was not included in the region file
+Output coverages for 15 regions on chr22
+Profiling chr 3 (198295559)
+Output coverages for 13 regions on chr3
+Profiling chr 4 (190214555)
+Output coverages for 7 regions on chr4
+Profiling chr 5 (181538259)
+Output coverages for 21 regions on chr5
+Profiling chr 6 (170805979)
+Output coverages for 25 regions on chr6
+Profiling chr 7 (159345973)
+Output coverages for 16 regions on chr7
+Profiling chr 8 (145138636)
+Output coverages for 10 regions on chr8
+Profiling chr 9 (138394717)
+Output coverages for 19 regions on chr9
+Profiling chr M (16569)
+Skipping analysis on chr Un_GL000218v1 because this chr was not included in the region file
+Skipping analysis on chr Un_GL000219v1 because this chr was not included in the region file
+Output coverages for 4 regions on chrM
+Profiling chr X (156040895)
+Skipping analysis on chr Y because this chr was not included in the region file
+Output coverages for 10 regions on chrX
+For regions on 0 chromosomes with NO coverage, output zeros.
+/data/home/elohmann/PROJET_S2/LIONS/bin/java -jar -Xmx5G /data/home/elohmann/PROJET_S2/LIONS/scripts/RNAseqPipeline/bin/RegionsCoverageFromWigCalculator.jar -w /data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2/k562/expression/wig/k562.q*.F*.wig.gz -r /data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2/k562/resources/assembly_exons_for_genes -s /data/home/elohmann/PROJET_S2/LIONS/resources/hg38_2/genome/hg38_2.chr.size -o /data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2/k562/expression/coverage -n k562
+$Id: RegionsCoverageFromWigCalculator.java 82545 2012-08-09 04:05:11Z mbilenky $
+Loading chromosome lengths from /data/home/elohmann/PROJET_S2/LIONS/resources/hg38_2/genome/hg38_2.chr.size
+Lengths for 455 chromosomes are loaded
+load /data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2/k562/resources/assembly_exons_for_genes
+1909 regions loaded from file
+Profiling chr 1 (248956422)
+Output coverages for 239 regions on chr1
+Profiling chr 10 (133797422)
+Output coverages for 57 regions on chr10
+Profiling chr 11 (135086622)
+Output coverages for 126 regions on chr11
+Profiling chr 12 (133275309)
+Skipping analysis on chr 12_GL877875v1_alt because this chr was not included in the region file
+Output coverages for 129 regions on chr12
+Profiling chr 13 (114364328)
+Output coverages for 18 regions on chr13
+Profiling chr 14 (107043718)
+Output coverages for 34 regions on chr14
+Profiling chr 15 (101991189)
+Output coverages for 33 regions on chr15
+Profiling chr 16 (90338345)
+Output coverages for 103 regions on chr16
+Profiling chr 17 (83257441)
+Skipping analysis on chr 17_GL000205v2_random because this chr was not included in the region file
+Output coverages for 108 regions on chr17
+Profiling chr 18 (80373285)
+Output coverages for 15 regions on chr18
+Profiling chr 19 (58617616)
+Output coverages for 226 regions on chr19
+Profiling chr 2 (242193529)
+Output coverages for 103 regions on chr2
+Profiling chr 20 (64444167)
+Output coverages for 31 regions on chr20
+Profiling chr 21 (46709983)
+Output coverages for 25 regions on chr21
+Profiling chr 22 (50818468)
+Skipping analysis on chr 22_KI270879v1_alt because this chr was not included in the region file
+Output coverages for 93 regions on chr22
+Profiling chr 3 (198295559)
+Output coverages for 39 regions on chr3
+Profiling chr 4 (190214555)
+Output coverages for 32 regions on chr4
+Profiling chr 5 (181538259)
+Output coverages for 98 regions on chr5
+Profiling chr 6 (170805979)
+Output coverages for 102 regions on chr6
+Profiling chr 7 (159345973)
+Output coverages for 93 regions on chr7
+Profiling chr 8 (145138636)
+Output coverages for 58 regions on chr8
+Profiling chr 9 (138394717)
+Output coverages for 101 regions on chr9
+Profiling chr M (16569)
+Skipping analysis on chr Un_GL000218v1 because this chr was not included in the region file
+Skipping analysis on chr Un_GL000219v1 because this chr was not included in the region file
+Output coverages for 4 regions on chrM
+Profiling chr X (156040895)
+Skipping analysis on chr Y because this chr was not included in the region file
+Output coverages for 42 regions on chrX
+For regions on 0 chromosomes with NO coverage, output zeros.
+/data/home/elohmann/PROJET_S2/LIONS/bin/java -jar -Xmx5G /data/home/elohmann/PROJET_S2/LIONS/scripts/RNAseqPipeline/bin/RegionsCoverageFromWigCalculator.jar -w /data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2/k562/expression/wig/k562.q*.F*.wig.gz -r /data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2/k562/resources/assembly_genes_for_coverage -s /data/home/elohmann/PROJET_S2/LIONS/resources/hg38_2/genome/hg38_2.chr.size -o /data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2/k562/expression/coverage -n k562
+$Id: RegionsCoverageFromWigCalculator.java 82545 2012-08-09 04:05:11Z mbilenky $
+Loading chromosome lengths from /data/home/elohmann/PROJET_S2/LIONS/resources/hg38_2/genome/hg38_2.chr.size
+Lengths for 455 chromosomes are loaded
+load /data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2/k562/resources/assembly_genes_for_coverage
+378 regions loaded from file
+Profiling chr 1 (248956422)
+Output coverages for 47 regions on chr1
+Profiling chr 10 (133797422)
+Output coverages for 12 regions on chr10
+Profiling chr 11 (135086622)
+Output coverages for 32 regions on chr11
+Profiling chr 12 (133275309)
+Skipping analysis on chr 12_GL877875v1_alt because this chr was not included in the region file
+Output coverages for 23 regions on chr12
+Profiling chr 13 (114364328)
+Output coverages for 3 regions on chr13
+Profiling chr 14 (107043718)
+Output coverages for 8 regions on chr14
+Profiling chr 15 (101991189)
+Output coverages for 7 regions on chr15
+Profiling chr 16 (90338345)
+Output coverages for 16 regions on chr16
+Profiling chr 17 (83257441)
+Skipping analysis on chr 17_GL000205v2_random because this chr was not included in the region file
+Output coverages for 23 regions on chr17
+Profiling chr 18 (80373285)
+Output coverages for 3 regions on chr18
+Profiling chr 19 (58617616)
+Output coverages for 41 regions on chr19
+Profiling chr 2 (242193529)
+Output coverages for 19 regions on chr2
+Profiling chr 20 (64444167)
+Output coverages for 6 regions on chr20
+Profiling chr 21 (46709983)
+Output coverages for 4 regions on chr21
+Profiling chr 22 (50818468)
+Skipping analysis on chr 22_KI270879v1_alt because this chr was not included in the region file
+Output coverages for 15 regions on chr22
+Profiling chr 3 (198295559)
+Output coverages for 13 regions on chr3
+Profiling chr 4 (190214555)
+Output coverages for 7 regions on chr4
+Profiling chr 5 (181538259)
+Output coverages for 20 regions on chr5
+Profiling chr 6 (170805979)
+Output coverages for 24 regions on chr6
+Profiling chr 7 (159345973)
+Output coverages for 15 regions on chr7
+Profiling chr 8 (145138636)
+Output coverages for 10 regions on chr8
+Profiling chr 9 (138394717)
+Output coverages for 16 regions on chr9
+Profiling chr M (16569)
+Skipping analysis on chr Un_GL000218v1 because this chr was not included in the region file
+Skipping analysis on chr Un_GL000219v1 because this chr was not included in the region file
+Output coverages for 4 regions on chrM
+Profiling chr X (156040895)
+Skipping analysis on chr Y because this chr was not included in the region file
+Output coverages for 10 regions on chrX
+For regions on 0 chromosomes with NO coverage, output zeros.
+/data/home/elohmann/PROJET_S2/LIONS/bin/java -jar -Xmx5G /data/home/elohmann/PROJET_S2/LIONS/scripts/RNAseqPipeline/bin/RegionsCoverageFromWigCalculator.jar -w /data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2/k562/expression/wig/k562.q*.F*.wig.gz -r /data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2/k562/resources/assembly_exons_for_coverage -s /data/home/elohmann/PROJET_S2/LIONS/resources/hg38_2/genome/hg38_2.chr.size -o /data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2/k562/expression/coverage -n k562
+$Id: RegionsCoverageFromWigCalculator.java 82545 2012-08-09 04:05:11Z mbilenky $
+Loading chromosome lengths from /data/home/elohmann/PROJET_S2/LIONS/resources/hg38_2/genome/hg38_2.chr.size
+Lengths for 455 chromosomes are loaded
+load /data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2/k562/resources/assembly_exons_for_coverage
+1908 regions loaded from file
+Profiling chr 1 (248956422)
+Output coverages for 239 regions on chr1
+Profiling chr 10 (133797422)
+Output coverages for 57 regions on chr10
+Profiling chr 11 (135086622)
+Output coverages for 126 regions on chr11
+Profiling chr 12 (133275309)
+Skipping analysis on chr 12_GL877875v1_alt because this chr was not included in the region file
+Output coverages for 129 regions on chr12
+Profiling chr 13 (114364328)
+Output coverages for 18 regions on chr13
+Profiling chr 14 (107043718)
+Output coverages for 34 regions on chr14
+Profiling chr 15 (101991189)
+Output coverages for 33 regions on chr15
+Profiling chr 16 (90338345)
+Output coverages for 103 regions on chr16
+Profiling chr 17 (83257441)
+Skipping analysis on chr 17_GL000205v2_random because this chr was not included in the region file
+Output coverages for 108 regions on chr17
+Profiling chr 18 (80373285)
+Output coverages for 15 regions on chr18
+Profiling chr 19 (58617616)
+Output coverages for 226 regions on chr19
+Profiling chr 2 (242193529)
+Output coverages for 103 regions on chr2
+Profiling chr 20 (64444167)
+Output coverages for 31 regions on chr20
+Profiling chr 21 (46709983)
+Output coverages for 25 regions on chr21
+Profiling chr 22 (50818468)
+Skipping analysis on chr 22_KI270879v1_alt because this chr was not included in the region file
+Output coverages for 93 regions on chr22
+Profiling chr 3 (198295559)
+Output coverages for 39 regions on chr3
+Profiling chr 4 (190214555)
+Output coverages for 32 regions on chr4
+Profiling chr 5 (181538259)
+Output coverages for 98 regions on chr5
+Profiling chr 6 (170805979)
+Output coverages for 101 regions on chr6
+Profiling chr 7 (159345973)
+Output coverages for 93 regions on chr7
+Profiling chr 8 (145138636)
+Output coverages for 58 regions on chr8
+Profiling chr 9 (138394717)
+Output coverages for 101 regions on chr9
+Profiling chr M (16569)
+Skipping analysis on chr Un_GL000218v1 because this chr was not included in the region file
+Skipping analysis on chr Un_GL000219v1 because this chr was not included in the region file
+Output coverages for 4 regions on chrM
+Profiling chr X (156040895)
+Skipping analysis on chr Y because this chr was not included in the region file
+Output coverages for 42 regions on chrX
+For regions on 0 chromosomes with NO coverage, output zeros.
+Coverage Complete
+
+Not a strand specific library (no LEAKAGE calculations)
+
+Skipping PROFILE...
+
+ RNAseqMaster.sh Ran to completion 
+RNAseqMaster complete
+
+expression/wig/k562.q10.F772.wig.gz
+Wig file generated successfully.
+
+ Chimeric Reads Analysis
+      ChimericReadTool.sh k562.bam
+/data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2/k562/expression/wig/k562.q10.F772.wig.gz
+=================================
+The Resources used are:
+     Reference set:  assembly
+     name:  k562
+     res:  /data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2/k562/resources
+     repeats:  /data/home/elohmann/PROJET_S2/LIONS/resources/hg38_2/repeat/forChimericSearch
+     exons:  /data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2/k562/resources/assembly_exons
+     chrSize:  /data/home/elohmann/PROJET_S2/LIONS/resources/hg38_2/genome/hg38_2.chr.size
+=================================
+
+/data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2/k562/resources/assembly_exons_2 is being generated
+Running Chimeric Read Search python script
+
+/data/home/elohmann/PROJET_S2/LIONS/bin/python3 /data/home/elohmann/PROJET_S2/LIONS/scripts/ChimericReadTool/chimericReadSearch.py /data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2/k562/resources/assembly_exons_2 /data/home/elohmann/PROJET_S2/LIONS/resources/hg38_2/repeat/forChimericSearch k562.bam tmp.bed > /data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2/k562/chimericReadSearch.out
+
+read search complete.
+===============================
+
+$Id: RegionsCoverageFromWigCalculator.java 82545 2012-08-09 04:05:11Z mbilenky $
+Loading chromosome lengths from /data/home/elohmann/PROJET_S2/LIONS/resources/hg38_2/genome/hg38_2.chr.size
+Lengths for 455 chromosomes are loaded
+load /data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2/k562/tmp_uniq_repeat_coords
+0 regions loaded from file
+Skipping analysis on chr 1 because this chr was not included in the region file
+Skipping analysis on chr 10 because this chr was not included in the region file
+Skipping analysis on chr 11 because this chr was not included in the region file
+Skipping analysis on chr 12 because this chr was not included in the region file
+Skipping analysis on chr 12_GL877875v1_alt because this chr was not included in the region file
+Skipping analysis on chr 13 because this chr was not included in the region file
+Skipping analysis on chr 14 because this chr was not included in the region file
+Skipping analysis on chr 15 because this chr was not included in the region file
+Skipping analysis on chr 16 because this chr was not included in the region file
+Skipping analysis on chr 17 because this chr was not included in the region file
+Skipping analysis on chr 17_GL000205v2_random because this chr was not included in the region file
+Skipping analysis on chr 18 because this chr was not included in the region file
+Skipping analysis on chr 19 because this chr was not included in the region file
+Skipping analysis on chr 2 because this chr was not included in the region file
+Skipping analysis on chr 20 because this chr was not included in the region file
+Skipping analysis on chr 21 because this chr was not included in the region file
+Skipping analysis on chr 22 because this chr was not included in the region file
+Skipping analysis on chr 22_KI270879v1_alt because this chr was not included in the region file
+Skipping analysis on chr 3 because this chr was not included in the region file
+Skipping analysis on chr 4 because this chr was not included in the region file
+Skipping analysis on chr 5 because this chr was not included in the region file
+Skipping analysis on chr 6 because this chr was not included in the region file
+Skipping analysis on chr 7 because this chr was not included in the region file
+Skipping analysis on chr 8 because this chr was not included in the region file
+Skipping analysis on chr 9 because this chr was not included in the region file
+Skipping analysis on chr M because this chr was not included in the region file
+Skipping analysis on chr Un_GL000218v1 because this chr was not included in the region file
+Skipping analysis on chr Un_GL000219v1 because this chr was not included in the region file
+Skipping analysis on chr X because this chr was not included in the region file
+Skipping analysis on chr Y because this chr was not included in the region file
+  ChimIntersect
+       chimIntersect.sh k562
+Running chimIntersect.sh script ---------------
+    Chimeric file: k562
+    Assembly file: assembly/transcripts.gtf
+    Gene Ann File: /data/home/elohmann/PROJET_S2/LIONS/resources/hg38_2/annotation/refGene.bed
+ 
+ ... Chimeric analysis completed.
+
+ ChimSort
+     Library: k562
+     Raw Lions File: k562.pc.lcsv
+     Output: k562.lion
+
+     --- classification parameters --- 
+     Predefined sort settings: oncoexaptation
+
+  Run ChimSort
+     Rscript chimSort.R k562.pc.lcsv k562.lion 479757 3 10 10 1 0.1 2 1.5
+Lions file not generated. Something is amiss.
+
+ ... run complete -------------------------------------------
+
+
+ ERROR 15: One of the East Lion Libraries didn't finish.

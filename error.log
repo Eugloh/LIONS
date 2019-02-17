@@ -1,0 +1,64 @@
+###########################
+# ChimericReadSearch v1.0 #
+###########################
+
+Data to StdOut, Msgs to StdErr
+
+Parameters ===================================
+ Exon File: /data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_newgenome/k562/resources/assembly_exons_2
+ Repeat File: /data/home/elohmann/PROJET_S2/LIONS/resources/hg38_2/repeat/forChimericSearch
+ Reads File: k562.bam
+
+
+Starting...
+Building exonTrees ( #24, min=572, max=244864531)
+	 constructing chromosome: 1
+	 constructing chromosome: 12
+	 constructing chromosome: 13
+	 constructing chromosome: 14
+	 constructing chromosome: 15
+	 constructing chromosome: 16
+	 constructing chromosome: 17
+	 constructing chromosome: 18
+	 constructing chromosome: 19
+	 constructing chromosome: 2
+	 constructing chromosome: 20
+	 constructing chromosome: 21
+	 constructing chromosome: 22
+	 constructing chromosome: 3
+	 constructing chromosome: 4
+	 constructing chromosome: 5
+	 constructing chromosome: 6
+	 constructing chromosome: 7
+	 constructing chromosome: 8
+	 constructing chromosome: 9
+	 constructing chromosome: M
+	 constructing chromosome: X
+	 constructing chromosome: 10
+	 constructing chromosome: 11
+Exon tree building complete
+ Using precomputed Repeat List and Interval Tree
+Processing all reads
+Traceback (most recent call last):
+  File "/data/home/elohmann/PROJET_S2/LIONS/scripts/ChimericReadTool/chimericReadSearch.py", line 728, in <module>
+    results = processReads(samfile_path, exonTrees, repeatTrees, chimericBedFile)
+  File "/data/home/elohmann/PROJET_S2/LIONS/scripts/ChimericReadTool/chimericReadSearch.py", line 109, in processReads
+    exon_results1 = exonTrees[str(chr)].findRange([start1,end1])
+KeyError: 'Y'
+Exception in thread "main" java.lang.NullPointerException
+	at java.base/java.util.TreeMap.compare(TreeMap.java:1291)
+	at java.base/java.util.TreeMap.put(TreeMap.java:536)
+	at java.base/java.util.TreeSet.add(TreeSet.java:255)
+	at src.tools.RegionsCoverageFromWigCalculator.execute(RegionsCoverageFromWigCalculator.java:255)
+	at src.tools.RegionsCoverageFromWigCalculator.main(RegionsCoverageFromWigCalculator.java:55)
+Error in read.table(file = file, header = header, sep = sep, quote = quote,  : 
+  no lines available in input
+Calls: read.csv -> read.table
+Execution halted
+rm: cannot remove '*.int.refGene': No such file or directory
+paste: appendCol.tmp: No such file or directory
+rm: cannot remove '*.bed': No such file or directory
+Error in read.table(file = file, header = header, sep = sep, quote = quote,  : 
+  no lines available in input
+Calls: read.csv -> read.table
+Execution halted

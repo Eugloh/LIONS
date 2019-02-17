@@ -1,0 +1,134 @@
+
+[2019-02-14 13:25:33] Beginning TopHat run (v2.0.13)
+-----------------------------------------------
+[2019-02-14 13:25:33] Checking for Bowtie
+		  Bowtie version:	 2.3.4.1
+[2019-02-14 13:25:33] Checking for Bowtie index files (genome)..
+[2019-02-14 13:25:33] Checking for reference FASTA file
+[2019-02-14 13:25:33] Generating SAM header for hg38_2
+[2019-02-14 13:25:47] Preparing reads
+	 left reads: min. length=101, max. length=101, 2498782 kept reads (1218 discarded)
+	right reads: min. length=101, max. length=101, 2498619 kept reads (1381 discarded)
+[2019-02-14 13:27:28] Mapping left_kept_reads to genome hg38_2 with Bowtie2 
+[2019-02-14 13:34:00] Mapping left_kept_reads_seg1 to genome hg38_2 with Bowtie2 (1/4)
+[2019-02-14 13:34:33] Mapping left_kept_reads_seg2 to genome hg38_2 with Bowtie2 (2/4)
+[2019-02-14 13:35:08] Mapping left_kept_reads_seg3 to genome hg38_2 with Bowtie2 (3/4)
+[2019-02-14 13:35:43] Mapping left_kept_reads_seg4 to genome hg38_2 with Bowtie2 (4/4)
+[2019-02-14 13:36:31] Mapping right_kept_reads to genome hg38_2 with Bowtie2 
+[2019-02-14 13:42:34] Mapping right_kept_reads_seg1 to genome hg38_2 with Bowtie2 (1/4)
+[2019-02-14 13:43:07] Mapping right_kept_reads_seg2 to genome hg38_2 with Bowtie2 (2/4)
+[2019-02-14 13:43:41] Mapping right_kept_reads_seg3 to genome hg38_2 with Bowtie2 (3/4)
+[2019-02-14 13:44:15] Mapping right_kept_reads_seg4 to genome hg38_2 with Bowtie2 (4/4)
+[2019-02-14 13:45:05] Searching for junctions via segment mapping
+[2019-02-14 13:47:58] Retrieving sequences for splices
+[2019-02-14 13:49:44] Indexing splices
+Building a SMALL index
+[2019-02-14 13:49:52] Mapping left_kept_reads_seg1 to genome segment_juncs with Bowtie2 (1/4)
+[2019-02-14 13:49:57] Mapping left_kept_reads_seg2 to genome segment_juncs with Bowtie2 (2/4)
+[2019-02-14 13:50:03] Mapping left_kept_reads_seg3 to genome segment_juncs with Bowtie2 (3/4)
+[2019-02-14 13:50:09] Mapping left_kept_reads_seg4 to genome segment_juncs with Bowtie2 (4/4)
+[2019-02-14 13:50:15] Joining segment hits
+[2019-02-14 13:52:07] Mapping right_kept_reads_seg1 to genome segment_juncs with Bowtie2 (1/4)
+[2019-02-14 13:52:13] Mapping right_kept_reads_seg2 to genome segment_juncs with Bowtie2 (2/4)
+[2019-02-14 13:52:19] Mapping right_kept_reads_seg3 to genome segment_juncs with Bowtie2 (3/4)
+[2019-02-14 13:52:24] Mapping right_kept_reads_seg4 to genome segment_juncs with Bowtie2 (4/4)
+[2019-02-14 13:52:31] Joining segment hits
+[2019-02-14 13:54:22] Reporting output tracks
+-----------------------------------------------
+[2019-02-14 13:56:35] A summary of the alignment counts can be found in /data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2/k562/align_summary.txt
+[2019-02-14 13:56:35] Run complete: 00:31:02 elapsed
+mv: cannot stat 'alignment/input.bam': No such file or directory
+Warning: Could not connect to update server to verify current version. Please check at the Cufflinks website (http://cufflinks.cbcb.umd.edu).
+Command line:
+/data/home/elohmann/PROJET_S2/LIONS/bin/cufflinks -q -o ./assembly -L k562 -u -p 6 --min-frags-per-transfrag 10 --max-multiread-fraction 0.99 --trim-3-avgcov-thresh 5 --trim-3-dropoff-frac=0.1 --overlap-radius 50 k562.bam 
+[13:56:43] Inspecting reads and determining fragment length distribution.
+Processed 32893 loci.                       
+Warning: Using default Gaussian distribution due to insufficient paired-end reads in open ranges.  It is recommended that correct parameters (--frag-len-mean and --frag-len-std-dev) be provided.
+> Map Properties:
+>	Normalized Map Mass: 58174.87
+>	Raw Map Mass: 58174.87
+>	Number of Multi-Reads: 20401 (with 120957 total hits)
+>	Fragment Length Distribution: Truncated Gaussian (default)
+>	              Default Mean: 200
+>	           Default Std Dev: 80
+[13:56:53] Assembling transcripts and initializing abundances for multi-read correction.
+
+WARNING: Multi-Hit not found (124912949,124913419).
+
+WARNING: Multi-Hit not found (8445171,8445419).
+
+WARNING: Multi-Hit not found (8445180,8445420).
+
+WARNING: Multi-Hit not found (8445182,8445420).
+
+WARNING: Multi-Hit not found (8445185,8445393).
+
+WARNING: Multi-Hit not found (8445191,8445421).
+Processed 32898 loci.                       
+[13:57:17] Loading reference annotation.
+[13:57:17] Re-estimating abundances with multi-read correction.
+Processed 378 loci.                         
+###########################
+# ChimericReadSearch v1.0 #
+###########################
+
+Data to StdOut, Msgs to StdErr
+
+Parameters ===================================
+ Exon File: /data/home/elohmann/PROJET_S2/LIONS/projects/hg38_10M_2/k562/resources/assembly_exons_2
+ Repeat File: /data/home/elohmann/PROJET_S2/LIONS/resources/hg38_2/repeat/forChimericSearch
+ Reads File: k562.bam
+
+
+Starting...
+Building exonTrees ( #24, min=572, max=244864531)
+	 constructing chromosome: 1
+	 constructing chromosome: 12
+	 constructing chromosome: 13
+	 constructing chromosome: 14
+	 constructing chromosome: 15
+	 constructing chromosome: 16
+	 constructing chromosome: 17
+	 constructing chromosome: 18
+	 constructing chromosome: 19
+	 constructing chromosome: 2
+	 constructing chromosome: 20
+	 constructing chromosome: 21
+	 constructing chromosome: 22
+	 constructing chromosome: 3
+	 constructing chromosome: 4
+	 constructing chromosome: 5
+	 constructing chromosome: 6
+	 constructing chromosome: 7
+	 constructing chromosome: 8
+	 constructing chromosome: 9
+	 constructing chromosome: M
+	 constructing chromosome: X
+	 constructing chromosome: 10
+	 constructing chromosome: 11
+Exon tree building complete
+ Using precomputed Repeat List and Interval Tree
+Processing all reads
+Traceback (most recent call last):
+  File "/data/home/elohmann/PROJET_S2/LIONS/scripts/ChimericReadTool/chimericReadSearch.py", line 728, in <module>
+    results = processReads(samfile_path, exonTrees, repeatTrees, chimericBedFile)
+  File "/data/home/elohmann/PROJET_S2/LIONS/scripts/ChimericReadTool/chimericReadSearch.py", line 109, in processReads
+    exon_results1 = exonTrees[str(chr)].findRange([start1,end1])
+KeyError: 'Y'
+Exception in thread "main" java.lang.NullPointerException
+	at java.base/java.util.TreeMap.compare(TreeMap.java:1291)
+	at java.base/java.util.TreeMap.put(TreeMap.java:536)
+	at java.base/java.util.TreeSet.add(TreeSet.java:255)
+	at src.tools.RegionsCoverageFromWigCalculator.execute(RegionsCoverageFromWigCalculator.java:255)
+	at src.tools.RegionsCoverageFromWigCalculator.main(RegionsCoverageFromWigCalculator.java:55)
+Error in read.table(file = file, header = header, sep = sep, quote = quote,  : 
+  no lines available in input
+Calls: read.csv -> read.table
+Execution halted
+rm: cannot remove '*.int.refGene': No such file or directory
+paste: appendCol.tmp: No such file or directory
+rm: cannot remove '*.bed': No such file or directory
+Error in read.table(file = file, header = header, sep = sep, quote = quote,  : 
+  no lines available in input
+Calls: read.csv -> read.table
+Execution halted
